@@ -1,5 +1,5 @@
 package application;
 
-public class Professor {
+public class Professor extends Usuario{
 
 }
