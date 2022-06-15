@@ -31,19 +31,7 @@ public class BancoDeDados {
 		}
 
 	}
-	public boolean consultarLogin(String login) {
-		for (Professor professor : getProfessores()) {
-			if(professor.getLogin().equals(login)) {
-				return true;
-			}
-		}
-		for (Aluno aluno : getAlunos()) {
-			if(aluno.getLogin().equals(login)) {
-				return true;
-			}			
-		}
-		return false;
-	}
+	
 	public ArrayList<String> recuperarMatriculasAlunos() {
 		ArrayList<String> matriculasAlunos = new ArrayList<String>();
 		for(Aluno aluno : getAlunos()) {
@@ -70,5 +58,38 @@ public class BancoDeDados {
 			matriculasProfessores.add(professor.getMatricula());
 		}
 		return matriculasProfessores;
+	}
+	public boolean consultarLogin(String login) {
+		for (Professor professor : getProfessores()) {
+			if(professor.getLogin().equals(login)) {
+				return true;
+			}
+		}
+		for (Aluno aluno : getAlunos()) {
+			if(aluno.getLogin().equals(login)) {
+				return true;
+			}			
+		}
+		return false;
+	}
+	public boolean validarSenhaProfessor(String login,String senha) {
+		for (Professor professor : getProfessores()) {
+			if(professor.getLogin().equals(login)) {
+				if(professor.getSenha().equals(senha)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	public boolean validarSenhaAluno(String login, String senha) {
+		for (Professor professor : getProfessores()) {
+			if(professor.getLogin().equals(login)) {
+				if(professor.getSenha().equals(senha)) {
+					return true;
+				}
+			}			
+		}
+		return false;
 	}
 }

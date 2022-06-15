@@ -68,6 +68,47 @@ public class AutenticacaoFacade {
 	}
 	
 	public void login() {
-		System.out.println("implementar");
+		
+		boolean loginFlag = true;
+		
+		while(loginFlag == true) {
+			System.out.println("Voce e aluno ou professor?\n1- Aluno\n2-Professor");
+			String tipoUsuario = this.getScanner().nextLine();
+			
+			System.out.println("login:");
+			String login = this.getScanner().nextLine();
+			System.out.println("senha:");
+			String senha = this.getScanner().nextLine();
+			
+			
+			if (bd.consultarLogin(login) == false) {
+				System.out.println("Usuario não encontrado");
+			}
+			else {
+				switch(tipoUsuario) {
+				case "1":
+					if(bd.validarSenhaAluno(login, senha) == false) {
+						System.out.println("Senha invalida para Aluno");
+					}else {
+						System.out.println("Login realizado com sucesso como Aluno");
+						loginFlag = false;
+					}
+					break;
+				case "2":
+					if(bd.validarSenhaProfessor(login, senha) == false) {
+						System.out.println("Senha invalida para Professor");
+					}else {
+						System.out.println("Login realizado com sucesso como Professor");
+						loginFlag = false;
+					}
+					break;
+				case "0":
+					loginFlag = false;
+					break;
+				default:
+					System.out.println("erro");
+				}
+			}
+		}
 	}
 }
