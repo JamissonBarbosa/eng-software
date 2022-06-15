@@ -37,14 +37,12 @@ public class AutenticacaoFacade {
 		getBd().cadastrarAluno(aluno);
 		matriculas = new ArrayList<String>();
 		
-		aluno.gerarMatricula(tipoUsuario,matriculas);
+		aluno.gerarMatricula(tipoUsuario,getBd().recuperarMatriculasAlunos());
 		System.out.println("Sua matricula: ");
 		System.out.println(aluno.getMatricula());
 	}
 	
 	public void login() {
 		System.out.println("implementar");
-
 	}
-
 }

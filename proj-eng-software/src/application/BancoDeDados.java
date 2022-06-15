@@ -30,6 +30,13 @@ public class BancoDeDados {
 			return false;
 		}
 	}
+	public ArrayList<String> recuperarMatriculasAlunos() {
+		ArrayList<String> matriculasAlunos = new ArrayList<String>();
+		for(Aluno aluno : getAlunos()) {
+			matriculasAlunos.add(aluno.getMatricula());
+		}
+		return matriculasAlunos;
+	}
 	
 	public void cadastrarProfessor(Professor novoProfessor) {
 		getProfessores().add(novoProfessor);
@@ -42,5 +49,12 @@ public class BancoDeDados {
 		else {
 			return false;
 		}
+	}
+	public ArrayList<String> recuperarMatriculasProfessores() {
+		ArrayList<String> matriculasProfessores = new ArrayList<String>();
+		for(Professor professor : getProfessores()) {
+			matriculasProfessores.add(professor.getMatricula());
+		}
+		return matriculasProfessores;
 	}
 }
