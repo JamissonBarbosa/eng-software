@@ -24,33 +24,47 @@ public class AutenticacaoFacade {
 		System.out.println("Voce e um:\n1- Aluno\n2- Professor");
 		String tipoUsuario = this.getScanner().nextLine();
 		
-		System.out.println("Nome: ");
-		String nome = this.getScanner().nextLine();
-		System.out.println("login: ");
-		String login = this.getScanner().nextLine();
-		System.out.println("senha: ");
-		String senha = this.getScanner().nextLine();
+		boolean cadastroFlag = true;
 		
-		switch(tipoUsuario) {
-		case "1":
-			Aluno aluno = new Aluno(nome,login,senha);
-			getBd().cadastrarAluno(aluno);
-			aluno.gerarMatricula("Aluno",getBd().recuperarMatriculasAlunos());
-			System.out.println("Cadastro concluido com sucesso!\\nSua matricula: ");
-			System.out.println(aluno.getMatricula());
-			break;
-		case "2":
-			Professor professor = new Professor(nome,login,senha);
-			getBd().cadastrarProfessor(professor);
-			professor.gerarMatricula("Professor",getBd().recuperarMatriculasProfessores());
-			System.out.println("Cadastro concluido com sucesso!\nSua matricula: ");
-			System.out.println(professor.getMatricula());
-			break;
-		default:
-			System.out.println("erro");
-			break;
-		}
-		
+		while(cadastroFlag == true) {
+			System.out.println("Nome: ");
+			String nome = this.getScanner().nextLine();
+			System.out.println("login: ");
+			String login = this.getScanner().nextLine();
+			System.out.println("senha: ");
+			String senha = this.getScanner().nextLine();
+			
+			if (bd.consultarLogin(login) == true){
+				System.out.println("Login ja existente, tente novamente");
+			}else {
+				switch(tipoUsuario) {
+				case "1":
+					
+					Aluno aluno = new Aluno(nome,login,senha);
+					getBd().cadastrarAluno(aluno);
+					aluno.gerarMatricula("Aluno",getBd().recuperarMatriculasAlunos());
+					System.out.println("Cadastro concluido com sucesso!\nSua matricula: ");
+					System.out.println(aluno.getMatricula());
+					cadastroFlag = false;
+					break;
+				case "2":
+					Professor professor = new Professor(nome,login,senha);
+
+					getBd().cadastrarProfessor(professor);
+					professor.gerarMatricula("Professor",getBd().recuperarMatriculasProfessores());
+					System.out.println("Cadastro concluido com sucesso!\nSua matricula: ");
+					System.out.println(professor.getMatricula());
+					cadastroFlag = false;
+					break;
+				case "0":
+					cadastroFlag = false;
+					break;
+				default:
+					System.out.println("erro");
+					break;
+				}
+			}			
+		}		
 	}
 	
 	public void login() {

@@ -29,6 +29,20 @@ public class BancoDeDados {
 		else {
 			return false;
 		}
+
+	}
+	public boolean consultarLogin(String login) {
+		for (Professor professor : getProfessores()) {
+			if(professor.getLogin().equals(login)) {
+				return true;
+			}
+		}
+		for (Aluno aluno : getAlunos()) {
+			if(aluno.getLogin().equals(login)) {
+				return true;
+			}			
+		}
+		return false;
 	}
 	public ArrayList<String> recuperarMatriculasAlunos() {
 		ArrayList<String> matriculasAlunos = new ArrayList<String>();
