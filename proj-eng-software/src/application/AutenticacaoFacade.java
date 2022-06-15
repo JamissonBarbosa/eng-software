@@ -1,7 +1,5 @@
 package application;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class AutenticacaoFacade {
@@ -22,9 +20,10 @@ public class AutenticacaoFacade {
 	public AutenticacaoFacade(){
 	}
 	public void cadastro() {
-		String tipoUsuario = "Aluno";
-		List<String> matriculas;
-
+		
+		System.out.println("Voce e um:\n1- Aluno\n2- Professor");
+		String tipoUsuario = this.getScanner().nextLine();
+		
 		System.out.println("Nome: ");
 		String nome = this.getScanner().nextLine();
 		System.out.println("login: ");
@@ -32,14 +31,26 @@ public class AutenticacaoFacade {
 		System.out.println("senha: ");
 		String senha = this.getScanner().nextLine();
 		
-		Aluno aluno = new Aluno(nome,login,senha);
+		switch(tipoUsuario) {
+		case "1":
+			Aluno aluno = new Aluno(nome,login,senha);
+			getBd().cadastrarAluno(aluno);
+			aluno.gerarMatricula("Aluno",getBd().recuperarMatriculasAlunos());
+			System.out.println("Cadastro concluido com sucesso!\\nSua matricula: ");
+			System.out.println(aluno.getMatricula());
+			break;
+		case "2":
+			Professor professor = new Professor(nome,login,senha);
+			getBd().cadastrarProfessor(professor);
+			professor.gerarMatricula("Professor",getBd().recuperarMatriculasProfessores());
+			System.out.println("Cadastro concluido com sucesso!\nSua matricula: ");
+			System.out.println(professor.getMatricula());
+			break;
+		default:
+			System.out.println("erro");
+			break;
+		}
 		
-		getBd().cadastrarAluno(aluno);
-		matriculas = new ArrayList<String>();
-		
-		aluno.gerarMatricula(tipoUsuario,getBd().recuperarMatriculasAlunos());
-		System.out.println("Sua matricula: ");
-		System.out.println(aluno.getMatricula());
 	}
 	
 	public void login() {

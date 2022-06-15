@@ -1,7 +1,6 @@
 package application;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Usuario{
 	private String nome;
@@ -47,7 +46,7 @@ public class Usuario{
 		this.senha = senha;
 	}
 	
-	public void gerarMatricula(String usuario, List<String> matriculas) {
+	public void gerarMatricula(String usuario, ArrayList<String> matriculas) {
 		String codigo;
 		int tamanho = matriculas.size();
 		String matricula;
