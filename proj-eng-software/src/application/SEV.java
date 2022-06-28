@@ -1,12 +1,13 @@
 package application;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class SEV {
-	
+	private static final List<Aluno> aluno = null;
 	public static void main(String[] args) {
-		Scanner scanner = new Scanner(System.in);
+		/*Scanner scanner = new Scanner(System.in);
 		AutenticacaoFacade autenticacao = new AutenticacaoFacade();
 		boolean sistemaFlag = true;
 		
@@ -27,6 +28,23 @@ public class SEV {
 				System.out.println("erro");
 				break;
 		}
-	}
+	}*/
+		
+		Scanner sc = new Scanner(System.in);
+	       
+        System.out.println("SISTEMA DE MATRICULA:");
+        System.out.print("Nome do aluno: ");
+        String name = sc.nextLine();
+        System.out.print("Matricula do aluno: ");
+        int matricula = sc.nextInt();
+
+        Professor p = new Professor("mario", aluno);
+         
+        List<Aluno> alunos = p.addAluno(name, matricula);
+
+        for(Aluno al: alunos){
+            System.out.println("Nome: "+al.name+"\n"+
+                                "Matricula: "+   al.matricula);
+        }
 }
 }

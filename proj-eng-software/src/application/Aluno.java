@@ -1,10 +1,13 @@
 package application;
 
 public class Aluno extends Usuario{
+	String name;
+    int matricula;
 
-	public Aluno(String name, String login, String senha) {
-		super(name, login, senha);
-		// TODO Auto-generated constructor stub
-	}
+    public Aluno(String name, int matricula){
+    	super();
+        this.name = name;
+        this.matricula = matricula;
+    }
 
 }
