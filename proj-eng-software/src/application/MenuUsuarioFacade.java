@@ -91,34 +91,42 @@ public class MenuUsuarioFacade {
 				break;
 			case "1":
 				for(Disciplina disciplina : this.getAluno().getDisciplinas()) {
-					System.out.println(this.getAluno().getDisciplinas().indexOf(disciplina)+1 +"- "+ disciplina.getNome());
+					int indexDisciplina = this.getAluno().getDisciplinas().indexOf(disciplina)+1;
+					System.out.println( indexDisciplina +"- "+ disciplina.getNome());
 				}
 				break;
 			case "2":
 				boolean matriculaFlag = true;
 				
 				while(matriculaFlag == true) {
-					System.out.println("Selecione as disciplinas que deseja matricular-se:");
+					System.out.println("Selecione as disciplinas que deseja matricular-se:\n0- Sair");
 					for (Disciplina disciplina : bd.getDisciplinas()) {
-
-						System.out.println("0- Sair\n"+bd.getDisciplinas().indexOf(disciplina)+1 +"- "+ disciplina.getNome() + ", professor: "+disciplina.getProfessor());
+						int indexDisciplina = bd.getDisciplinas().indexOf(disciplina)+1;
+						System.out.println(indexDisciplina +"- "+ disciplina.getNome() + ", professor: "+disciplina.getProfessor());
 					}
 					int matricula = sc.nextInt();
 					if (matricula == 0) {
 						matriculaFlag = false;
+						break;
 					}else {
 						for(Disciplina disciplina : bd.getDisciplinas()) {
-							if (this.getAluno().getDisciplinas().contains(disciplina)){
-								System.out.println("Voce ja esta matriculado nesta disciplina");
-								break;
-							}else {
-								aluno.getDisciplinas().add(disciplina);
-								System.out.println("A matricula na disciplina "+ disciplina.getNome() +" foi realizada com sucesso.");
+							if (bd.getDisciplinas().indexOf(disciplina)==matricula-1) {
+								if (this.getAluno().getDisciplinas().contains(disciplina)){
+									System.out.println("Voce ja esta matriculado nesta disciplina");
+									break;
+								}else {
+									aluno.getDisciplinas().add(disciplina);
+									System.out.println("A matricula na disciplina "+ disciplina.getNome() +" foi realizada com sucesso.");
+								}
+							break;
 							}
+
 						}
 					}
 				}
 				break;
+				default:
+					System.out.println("Opcao invalida");
 			}
 		}
 	}

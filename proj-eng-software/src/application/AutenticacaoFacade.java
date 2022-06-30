@@ -27,9 +27,6 @@ public class AutenticacaoFacade {
 	public AutenticacaoFacade(){
 	}
 	public void cadastro() {
-		/*disciplina de teste
-		Disciplina d1 = new Disciplina("d1","abc");
-		this.getBd().getDisciplinas().add(d1);*/
 		
 		System.out.println("Voce e um:\n1- Aluno\n2- Professor");
 		String tipoUsuario = this.getScanner().nextLine();
@@ -44,15 +41,15 @@ public class AutenticacaoFacade {
 			System.out.println("senha: ");
 			String senha = this.getScanner().nextLine();
 			
-			if (bd.consultarLogin(login) == true){
+			if (this.getBd().consultarLogin(login) == true){
 				System.out.println("Login ja existente, tente novamente");
 			}else {
 				switch(tipoUsuario) {
 				case "1":
 					
 					Aluno aluno = new Aluno(nome,login,senha);
-					getBd().cadastrarAluno(aluno);
-					aluno.gerarMatricula("Aluno",getBd().recuperarMatriculasAlunos());
+					this.getBd().cadastrarAluno(aluno);
+					aluno.gerarMatricula("Aluno",this.getBd().recuperarMatriculasAlunos());
 					System.out.println("Cadastro concluido com sucesso!\nSua matricula: ");
 					System.out.println(aluno.getMatricula());
 					cadastroFlag = false;
@@ -60,8 +57,8 @@ public class AutenticacaoFacade {
 				case "2":
 					Professor professor = new Professor(nome,login,senha);
 
-					getBd().cadastrarProfessor(professor);
-					professor.gerarMatricula("Professor",getBd().recuperarMatriculasProfessores());
+					this.getBd().cadastrarProfessor(professor);
+					professor.gerarMatricula("Professor",this.getBd().recuperarMatriculasProfessores());
 					System.out.println("Cadastro concluido com sucesso!\nSua matricula: ");
 					System.out.println(professor.getMatricula());
 					cadastroFlag = false;
@@ -78,6 +75,13 @@ public class AutenticacaoFacade {
 	}
 	
 	public void login() {
+		/*disciplinas e aluno de teste*/
+		Disciplina d1 = new Disciplina("d1","abc");
+		this.getBd().getDisciplinas().add(d1);
+		Disciplina d2 = new Disciplina("d2","abc");
+		this.getBd().getDisciplinas().add(d2);
+		Aluno a1 = new Aluno("a1","a1","a1");
+		this.getBd().getAlunos().add(a1);
 		
 		boolean loginFlag = true;
 		
@@ -91,26 +95,26 @@ public class AutenticacaoFacade {
 			String senha = this.getScanner().nextLine();
 			
 			
-			if (bd.consultarLogin(login) == false) {
-				System.out.println("Usuario não encontrado");
+			if (this.getBd().consultarLogin(login) == false) {
+				System.out.println("Usuario nao encontrado");
 			}
 			else {
 				switch(tipoUsuario) {
 				case "1":
-					if(bd.validarSenhaAluno(login, senha) == false) {
+					if(this.getBd().validarSenhaAluno(login, senha) == false) {
 						System.out.println("Senha invalida para Aluno");
 					}else {
 						System.out.println("Login realizado com sucesso como Aluno");
-						this.getMenuUsuario().MenuAluno(this.getScanner(), bd, login);
+						this.getMenuUsuario().MenuAluno(this.getScanner(), this.getBd(), login);
 						loginFlag = false;
 					}
 					break;
 				case "2":
-					if(bd.validarSenhaProfessor(login, senha) == false) {
+					if(this.getBd().validarSenhaProfessor(login, senha) == false) {
 						System.out.println("Senha invalida para Professor");
 					}else {
 						System.out.println("Login realizado com sucesso como Professor");
-						this.getMenuUsuario().MenuProfessor(this.getScanner(), bd, login);
+						this.getMenuUsuario().MenuProfessor(this.getScanner(), this.getBd(), login);
 						loginFlag = false;
 						
 					}
