@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class AutenticacaoFacade {
 	private Scanner scanner = new Scanner(System.in);
 	private BancoDeDados bd = new BancoDeDados();
+	private MenuUsuarioFacade menuUsuario = new MenuUsuarioFacade();
 
 	
 	public Scanner getScanner() {
@@ -17,6 +18,12 @@ public class AutenticacaoFacade {
 		this.bd = bd;
 	}
 	
+	public MenuUsuarioFacade getMenuUsuario() {
+		return menuUsuario;
+	}
+	public void setMenuUsuario(MenuUsuarioFacade menuUsuario) {
+		this.menuUsuario = menuUsuario;
+	}
 	public AutenticacaoFacade(){
 	}
 	public void cadastro() {
@@ -99,7 +106,9 @@ public class AutenticacaoFacade {
 						System.out.println("Senha invalida para Professor");
 					}else {
 						System.out.println("Login realizado com sucesso como Professor");
+						this.getMenuUsuario().MenuProfessor(this.getScanner(), bd, login);
 						loginFlag = false;
+						
 					}
 					break;
 				case "0":

@@ -1,13 +1,10 @@
 package application;
 
-public class Aluno extends Usuario{
-	String name;
-    int matricula;
+public class Aluno extends Usuario{;
 
-    public Aluno(String name, int matricula){
-    	super();
-        this.name = name;
-        this.matricula = matricula;
+    public Aluno(String nome, String login, String senha){
+    	super(nome, login, senha);
+
     }
 
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 public class BancoDeDados {
 	private ArrayList<Aluno> alunos = new ArrayList<Aluno>();
 	private ArrayList<Professor> professores = new ArrayList<Professor>();
+	private ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
 	
 	public ArrayList<Aluno> getAlunos() {
 		return alunos;
@@ -18,6 +19,12 @@ public class BancoDeDados {
 		this.professores = professores;
 	}
 
+	public ArrayList<Disciplina> getDisciplinas() {
+		return disciplinas;
+	}
+	public void setDisciplinas(ArrayList<Disciplina> disciplinas) {
+		this.disciplinas = disciplinas;
+	}
 	public void cadastrarAluno(Aluno novoAluno) {
 		getAlunos().add(novoAluno);
 	}
@@ -91,5 +98,8 @@ public class BancoDeDados {
 			}			
 		}
 		return false;
+	}
+	public void cadastrarDisciplina(Disciplina disciplina) {
+		this.getDisciplinas().add(disciplina);
 	}
 }

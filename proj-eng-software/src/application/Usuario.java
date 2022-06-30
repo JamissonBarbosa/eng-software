@@ -7,6 +7,8 @@ public class Usuario{
 	private String matricula;
 	private String login;
 	private String senha;
+    private ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
+
 	
 	public Usuario(String nome,String login, String senha){
 		this.setNome(nome);
@@ -46,6 +48,14 @@ public class Usuario{
 		this.senha = senha;
 	}
 	
+	public ArrayList<Disciplina> getDisciplinas() {
+		return disciplinas;
+	}
+
+	public void setDisciplinas(ArrayList<Disciplina> disciplinas) {
+		this.disciplinas = disciplinas;
+	}
+
 	public void gerarMatricula(String usuario, ArrayList<String> matriculas) {
 		String codigo;
 		int tamanho = matriculas.size();
