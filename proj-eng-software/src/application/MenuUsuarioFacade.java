@@ -99,20 +99,21 @@ public class MenuUsuarioFacade {
 				
 				while(matriculaFlag == true) {
 					System.out.println("Selecione as disciplinas que deseja matricular-se:");
-					int matricula = sc.nextInt();
 					for (Disciplina disciplina : bd.getDisciplinas()) {
-						System.out.println("0- Sair\n"+bd.getDisciplinas().indexOf(disciplina)+1 +"- "+ disciplina.getNome());
+
+						System.out.println("0- Sair\n"+bd.getDisciplinas().indexOf(disciplina)+1 +"- "+ disciplina.getNome() + ", professor: "+disciplina.getProfessor());
 					}
+					int matricula = sc.nextInt();
 					if (matricula == 0) {
 						matriculaFlag = false;
 					}else {
-						for(Disciplina disciplina : this.getAluno().getDisciplinas()) {
-							if (disciplina.equals(bd.getDisciplinas().get(matricula-1))){
-								System.out.println("Você já está matriculado nesta disciplina");
+						for(Disciplina disciplina : bd.getDisciplinas()) {
+							if (this.getAluno().getDisciplinas().contains(disciplina)){
+								System.out.println("Voce ja esta matriculado nesta disciplina");
 								break;
 							}else {
-								aluno.getDisciplinas().add(bd.getDisciplinas().get(matricula-1));
-								System.out.println("A matricula na disciplina "+ bd.getDisciplinas().get(matricula-1)+" foi realizada com sucesso.");
+								aluno.getDisciplinas().add(disciplina);
+								System.out.println("A matricula na disciplina "+ disciplina.getNome() +" foi realizada com sucesso.");
 							}
 						}
 					}

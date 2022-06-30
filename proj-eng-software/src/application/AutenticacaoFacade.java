@@ -27,6 +27,9 @@ public class AutenticacaoFacade {
 	public AutenticacaoFacade(){
 	}
 	public void cadastro() {
+		/*disciplina de teste
+		Disciplina d1 = new Disciplina("d1","abc");
+		this.getBd().getDisciplinas().add(d1);*/
 		
 		System.out.println("Voce e um:\n1- Aluno\n2- Professor");
 		String tipoUsuario = this.getScanner().nextLine();
