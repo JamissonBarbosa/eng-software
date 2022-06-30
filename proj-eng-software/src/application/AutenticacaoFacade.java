@@ -105,7 +105,7 @@ public class AutenticacaoFacade {
 						System.out.println("Senha invalida para Aluno");
 					}else {
 						System.out.println("Login realizado com sucesso como Aluno");
-						this.getMenuUsuario().MenuAluno(this.getScanner(), this.getBd(), login);
+						this.getMenuUsuario().MenuAluno(this.getBd(), login);
 						loginFlag = false;
 					}
 					break;
@@ -114,7 +114,7 @@ public class AutenticacaoFacade {
 						System.out.println("Senha invalida para Professor");
 					}else {
 						System.out.println("Login realizado com sucesso como Professor");
-						this.getMenuUsuario().MenuProfessor(this.getScanner(), this.getBd(), login);
+						this.getMenuUsuario().MenuProfessor(this.getBd(), login);
 						loginFlag = false;
 						
 					}

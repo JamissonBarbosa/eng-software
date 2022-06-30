@@ -5,7 +5,8 @@ import java.util.Scanner;
 public class MenuUsuarioFacade {
 	private Professor professor;
 	private Aluno aluno;
-	
+	private Scanner scFuncionalidade = new Scanner(System.in);
+
 	public Professor getProfessor() {
 		return professor;
 	}
@@ -32,17 +33,22 @@ public class MenuUsuarioFacade {
 		}
 	}
 
+	public Scanner getScFuncionalidade() {
+		return scFuncionalidade;
+	}
+
 	public MenuUsuarioFacade(){}
 	
 	
-	public void MenuProfessor(Scanner sc,BancoDeDados bd, String professorLogin) {
-		
+	public void MenuProfessor(BancoDeDados bd, String professorLogin) {
+		Scanner scCriarDisciplina = new Scanner(System.in);
+
 		this.setProfessor(professorLogin, bd);
 		boolean funcionalidadeFlag = true;
 		
 		while (funcionalidadeFlag == true) {
 			System.out.println("0- Sair\n1- Listar disciplinas\n2- Criar nova disciplina\n3- Excluir disciplina");
-			String funcionalidade = sc.nextLine();
+			String funcionalidade = this.getScFuncionalidade().nextLine();
 			
 			switch(funcionalidade) {
 			case "0":
@@ -55,7 +61,7 @@ public class MenuUsuarioFacade {
 				break;
 			case "2":
 				System.out.println("Nome da disciplina: ");
-				String nomeDaDisciplina = sc.nextLine();
+				String nomeDaDisciplina = scCriarDisciplina.nextLine();
 				Disciplina disciplina = new Disciplina(nomeDaDisciplina,this.professor.getNome());
 				if(this.getProfessor().getDisciplinas().contains(disciplina)) {
 					System.out.println("Disciplina ja existente.");
@@ -77,13 +83,14 @@ public class MenuUsuarioFacade {
 		
 	}
 	
-	public void MenuAluno(Scanner sc,BancoDeDados bd, String alunoLogin) {
+	public void MenuAluno(BancoDeDados bd, String alunoLogin) {
+		Scanner scMatricula = new Scanner(System.in);
 		this.setAluno(alunoLogin, bd);
 		boolean funcionalidadeFlag = true;
 		
 		while (funcionalidadeFlag == true) {
 			System.out.println("0- Sair\n1- Disciplinas matriculadas\n2- Matricular-se em disciplina");
-			String funcionalidade = sc.nextLine();
+			String funcionalidade = this.getScFuncionalidade().nextLine();
 			
 			switch(funcionalidade) {
 			case "0":
@@ -104,10 +111,9 @@ public class MenuUsuarioFacade {
 						int indexDisciplina = bd.getDisciplinas().indexOf(disciplina)+1;
 						System.out.println(indexDisciplina +"- "+ disciplina.getNome() + ", professor: "+disciplina.getProfessor());
 					}
-					int matricula = sc.nextInt();
+					int matricula = scMatricula.nextInt();
 					if (matricula == 0) {
 						matriculaFlag = false;
-						break;
 					}else {
 						for(Disciplina disciplina : bd.getDisciplinas()) {
 							if (bd.getDisciplinas().indexOf(disciplina)==matricula-1) {
