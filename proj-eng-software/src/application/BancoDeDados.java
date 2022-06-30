@@ -90,9 +90,9 @@ public class BancoDeDados {
 		return false;
 	}
 	public boolean validarSenhaAluno(String login, String senha) {
-		for (Professor professor : getProfessores()) {
-			if(professor.getLogin().equals(login)) {
-				if(professor.getSenha().equals(senha)) {
+		for (Aluno aluno : getAlunos()) {
+			if(aluno.getLogin().equals(login)) {
+				if(aluno.getSenha().equals(senha)) {
 					return true;
 				}
 			}			

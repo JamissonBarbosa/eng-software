@@ -98,6 +98,7 @@ public class AutenticacaoFacade {
 						System.out.println("Senha invalida para Aluno");
 					}else {
 						System.out.println("Login realizado com sucesso como Aluno");
+						this.getMenuUsuario().MenuAluno(this.getScanner(), bd, login);
 						loginFlag = false;
 					}
 					break;
