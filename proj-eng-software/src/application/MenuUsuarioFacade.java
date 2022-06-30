@@ -35,18 +35,26 @@ public class MenuUsuarioFacade {
 				funcionalidadeFlag = false;
 				break;
 			case "1":
+				for(Disciplina disciplina : this.getProfessor().getDisciplinas()) {
+					System.out.println(this.getProfessor().getDisciplinas().indexOf(disciplina)+1 +"- "+ disciplina.getNome());
+				}
 				break;
 			case "2":
 				System.out.println("Nome da disciplina: ");
 				String nomeDaDisciplina = sc.nextLine();
 				Disciplina disciplina = new Disciplina(nomeDaDisciplina,this.professor.getNome());
-				this.professor.getDisciplinas().add(disciplina);
-				System.out.println("Disciplina criada com sucesso!");
+				if(this.getProfessor().getDisciplinas().contains(disciplina)) {
+					System.out.println("Disciplina ja existente.");
+				}
+				else {
+					this.getProfessor().getDisciplinas().add(disciplina);
+					System.out.println("Disciplina criada com sucesso!");
+				}	
 				break;
 			case "3":
 				break;
 			default:
-				System.out.println("Insira um valor válido!");
+				System.out.println("Insira um valor valido!");
 				break;
 			}
 		}
