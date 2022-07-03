@@ -2,7 +2,8 @@ package application;
 
 import java.util.ArrayList;
 
-public class Usuario{
+
+public abstract class Usuario{
 	private String nome;
 	private String matricula;
 	private String login;
@@ -56,22 +57,27 @@ public class Usuario{
 		this.disciplinas = disciplinas;
 	}
 
-	public void gerarMatricula(String usuario, ArrayList<String> matriculas) {
-		String codigo;
-		int tamanho = matriculas.size();
-		String matricula;
-		
-		if (usuario == "Aluno") {
-			codigo = "AL";
-		}
-		else {
-			codigo = "PR";
-		}
-		matricula = codigo + Integer.toString(tamanho);
-		
-		setMatricula(matricula);
+	public void gerarMatriculaTemplateMethod(int tamanho, int ano) {
+		this.prefixo();
+		this.numSufixo(tamanho);
+		this.anoSufixo(ano);
+		this.matriculaToString();
 		
 	}
 	
+	public abstract void prefixo();
+	
+	public void numSufixo(int tamanho) {
+		this.setMatricula(this.getMatricula() + Integer.toString(tamanho));
+	}
+	
+	public void anoSufixo(int ano) {
+		String anoString = Integer.toString(ano);
+		this.setMatricula(this.getMatricula() + anoString.charAt(2) + anoString.charAt(3));
+	}
+	
+	public void matriculaToString() {
+		System.out.println("Matricula gerada com sucesso!\n Sua matricula: "+ this.getMatricula());
+	}
 
 }

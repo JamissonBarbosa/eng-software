@@ -7,4 +7,10 @@ public class Aluno extends Usuario{;
 
     }
 
+	@Override
+	public void prefixo() {
+		this.setMatricula("AL");
+		
+	}
+
 }

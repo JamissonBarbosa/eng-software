@@ -1,5 +1,6 @@
 package application;
 
+import java.util.Calendar;
 import java.util.Scanner;
 
 public class AutenticacaoFacade {
@@ -24,6 +25,7 @@ public class AutenticacaoFacade {
 	public void setMenuUsuario(MenuUsuarioFacade menuUsuario) {
 		this.menuUsuario = menuUsuario;
 	}
+
 	public AutenticacaoFacade(){
 	}
 	public void cadastro() {
@@ -49,7 +51,7 @@ public class AutenticacaoFacade {
 					
 					Aluno aluno = new Aluno(nome,login,senha);
 					this.getBd().cadastrarAluno(aluno);
-					aluno.gerarMatricula("Aluno",this.getBd().recuperarMatriculasAlunos());
+					aluno.gerarMatriculaTemplateMethod(this.getBd().recuperarMatriculasAlunos().size(),Calendar.getInstance().get(Calendar.YEAR));
 					System.out.println("Cadastro concluido com sucesso!\nSua matricula: ");
 					System.out.println(aluno.getMatricula());
 					cadastroFlag = false;
@@ -58,7 +60,7 @@ public class AutenticacaoFacade {
 					Professor professor = new Professor(nome,login,senha);
 
 					this.getBd().cadastrarProfessor(professor);
-					professor.gerarMatricula("Professor",this.getBd().recuperarMatriculasProfessores());
+					professor.gerarMatriculaTemplateMethod(this.getBd().recuperarMatriculasProfessores().size(),Calendar.getInstance().get(Calendar.YEAR));
 					System.out.println("Cadastro concluido com sucesso!\nSua matricula: ");
 					System.out.println(professor.getMatricula());
 					cadastroFlag = false;

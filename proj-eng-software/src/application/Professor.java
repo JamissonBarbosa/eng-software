@@ -8,6 +8,12 @@ public class Professor extends Usuario{
 
     }
 
+	@Override
+	public void prefixo() {
+		this.setMatricula("PR");
+		
+	}
+
 
 
     /*public List<Aluno> addAluno(String name, int matricula){
