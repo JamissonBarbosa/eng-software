@@ -5,13 +5,16 @@ import java.util.ArrayList;
 public class Disciplina {
 	private String nome;
 	private String professor;
+	private String ementa;
 	private ArrayList<Aluno> alunos = new ArrayList<Aluno>();
 	private ArrayList<Aula> aulas = new ArrayList<Aula>();
 	private ArrayList<Atividade> atividades = new ArrayList<Atividade>();
 	
-	public Disciplina(String nome, String professor){
-		this.nome = nome;
-		this.professor = professor;
+	public Disciplina(String nome, String professor, String ementa){
+		this.setNome(nome);
+		this.setProfessor(professor);
+		this.setEmenta(ementa);
+		
 	}
 	public String getNome() {
 		return nome;
@@ -24,6 +27,12 @@ public class Disciplina {
 	}
 	public void setProfessor(String professor) {
 		this.professor = professor;
+	}
+	public String getEmenta() {
+		return ementa;
+	}
+	public void setEmenta(String ementa) {
+		this.ementa = ementa;
 	}
 	public ArrayList<Aluno> getAlunos() {
 		return alunos;

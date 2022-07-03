@@ -61,15 +61,22 @@ public class MenuUsuarioFacade {
 				break;
 			case "2":
 				System.out.println("Nome da disciplina: ");
-				String nomeDaDisciplina = scCriarDisciplina.nextLine();
-				Disciplina disciplina = new Disciplina(nomeDaDisciplina,this.professor.getNome());
-				if(this.getProfessor().getDisciplinas().contains(disciplina)) {
+				String nomeDisciplina = scCriarDisciplina.nextLine();
+				System.out.println("Ementa da disciplina: ");
+				String ementaDisciplina = scCriarDisciplina.nextLine();
+				Disciplina disciplina = new Disciplina(nomeDisciplina,this.professor.getNome(),ementaDisciplina);
+				if(this.getProfessor().disciplinaExistente(disciplina) == true) {
 					System.out.println("Disciplina ja existente.");
 				}
 				else {
-					this.getProfessor().getDisciplinas().add(disciplina);
-					bd.getDisciplinas().add(disciplina);
-					System.out.println("Disciplina criada com sucesso!");
+					if(this.getProfessor().getDisciplinas().size() > 4) {
+						System.out.println("Numero maximo de disciplinas alcancado (5)");
+					}
+					else {
+						this.getProfessor().getDisciplinas().add(disciplina);
+						bd.getDisciplinas().add(disciplina);
+						System.out.println("Disciplina criada com sucesso!");
+					}
 				}	
 				break;
 			case "3":
@@ -109,7 +116,7 @@ public class MenuUsuarioFacade {
 					System.out.println("Selecione as disciplinas que deseja matricular-se:\n0- Sair");
 					for (Disciplina disciplina : bd.getDisciplinas()) {
 						int indexDisciplina = bd.getDisciplinas().indexOf(disciplina)+1;
-						System.out.println(indexDisciplina +"- "+ disciplina.getNome() + ", professor: "+disciplina.getProfessor());
+						System.out.println(indexDisciplina +"- "+ disciplina.getNome() + ", professor: "+disciplina.getProfessor()+", ementa: "+disciplina.getEmenta());
 					}
 					int matricula = scMatricula.nextInt();
 					if (matricula == 0) {

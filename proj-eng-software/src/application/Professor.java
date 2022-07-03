@@ -13,6 +13,16 @@ public class Professor extends Usuario{
 		this.setMatricula("PR");
 		
 	}
+	
+	public boolean disciplinaExistente(Disciplina novaDisciplina){
+		for(Disciplina disciplina : this.getDisciplinas()) {
+			if (disciplina.getNome().equals(novaDisciplina.getNome())){
+				return true;
+			}
+		}
+		return false;
+		
+	}
 
 
 
