@@ -52,17 +52,12 @@ public class AutenticacaoFacade {
 					Aluno aluno = new Aluno(nome,login,senha);
 					this.getBd().cadastrarAluno(aluno);
 					aluno.gerarMatriculaTemplateMethod(this.getBd().recuperarMatriculasAlunos().size(),Calendar.getInstance().get(Calendar.YEAR));
-					System.out.println("Cadastro concluido com sucesso!\nSua matricula: ");
-					System.out.println(aluno.getMatricula());
 					cadastroFlag = false;
 					break;
 				case "2":
 					Professor professor = new Professor(nome,login,senha);
-
 					this.getBd().cadastrarProfessor(professor);
 					professor.gerarMatriculaTemplateMethod(this.getBd().recuperarMatriculasProfessores().size(),Calendar.getInstance().get(Calendar.YEAR));
-					System.out.println("Cadastro concluido com sucesso!\nSua matricula: ");
-					System.out.println(professor.getMatricula());
 					cadastroFlag = false;
 					break;
 				case "0":
