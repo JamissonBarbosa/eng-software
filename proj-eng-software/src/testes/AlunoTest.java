@@ -7,23 +7,12 @@ import org.junit.jupiter.api.Test;
 import application.Aluno;
 
 class AlunoTest {
-	private Aluno aluno = new Aluno("a","a","a");
+	private Aluno a1 = new Aluno("a1","loginA1","senhaA1");
 
 	@Test
-	void testGetMatricula() {
-		aluno.gerarMatriculaTemplateMethod(1, 2022);
-		assertEquals(aluno.getMatricula(),"AL122");
+	void testGerarMatriculaTemplateMethod() {
+		a1.gerarMatriculaTemplateMethod(1, 2022);
+		assertEquals(a1.getMatricula(),"AL122");
 	}
-
-	@Test
-	void testGetNome() {
-		aluno.getNome();
-		assertEquals(aluno.getNome(),"a");
-	}
-	
-
-	
-	
-	
 
 }
