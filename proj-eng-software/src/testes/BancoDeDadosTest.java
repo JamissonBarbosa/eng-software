@@ -12,6 +12,7 @@ import application.BancoDeDados;
 import application.Disciplina;
 import application.Professor;
 import exceptions.LoginExistenteException;
+import exceptions.SenhaInvalidaException;
 
 class BancoDeDadosTest {
 	
@@ -133,29 +134,52 @@ class BancoDeDadosTest {
 		
 		assertEquals(bd.consultarLogin(a2.getLogin()),false);
 	}
-
+	
 	@Test
 	void testValidarSenhaProfessor1() {
 				
-		assertEquals(bd.validarSenhaProfessor(p1.getLogin(), p1.getSenha()),true);
+		try {
+			bd.validarSenhaProfessor(p1.getLogin(), p1.getSenha());
+		} catch (SenhaInvalidaException e) {
+			fail("Senha indevidamente invalida.");
+			e.printStackTrace();
+		}
 	}
-	
+
 	@Test
 	void testValidarSenhaProfessor2() {
 		
-		assertEquals(bd.validarSenhaProfessor(p2.getLogin(), p2.getSenha()),false);
+		try {
+			bd.validarSenhaProfessor(p1.getLogin(), p2.getSenha());
+			fail("Senha erroneamente valida.");
+		} catch (SenhaInvalidaException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Test
 	void testValidarSenhaAluno1() {
 		
-		assertEquals(bd.validarSenhaAluno(a1.getLogin(), a1.getSenha()),true);
-
+		try {
+			bd.validarSenhaAluno(a1.getLogin(), a1.getSenha());
+		} catch (SenhaInvalidaException e) {
+			fail("Senha indevidamente invalida.");
+			e.printStackTrace();
+		}
 	}
+
+	
 	@Test
 	void testValidarSenhaAluno2() {
 		
-		assertEquals(bd.validarSenhaAluno(a2.getLogin(), a2.getSenha()),false);
+		try {
+			bd.validarSenhaAluno(a1.getLogin(), a2.getSenha());
+			fail("Senha erroneamente valida.");
+		} catch (SenhaInvalidaException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 

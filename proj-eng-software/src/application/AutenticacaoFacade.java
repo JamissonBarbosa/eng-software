@@ -5,18 +5,28 @@ import java.util.Scanner;
 
 import exceptions.EntradaInvalidaException;
 import exceptions.LoginExistenteException;
+import exceptions.SenhaInvalidaException;
+import exceptions.UsuarioInexistenteException;
 
 public class AutenticacaoFacade {
 	private Scanner scanner = new Scanner(System.in);
 	private BancoDeDados bd = new BancoDeDados();
 	private MenuUsuarioFacade menuUsuario = new MenuUsuarioFacade();
 	private boolean cadastroFlag;
+	private boolean loginFlag;
+		
 	
 	public boolean getCadastroFlag() {
 		return cadastroFlag;
 	}
 	public void setCadastroFlag(boolean cadastroFlag) {
 		this.cadastroFlag = cadastroFlag;
+	}
+	public boolean getLoginFlag() {
+		return loginFlag;
+	}
+	public void setLoginFlag(boolean loginFlag) {
+		this.loginFlag = loginFlag;
 	}
 	public Scanner getScanner() {
 		return scanner;
@@ -100,9 +110,9 @@ public class AutenticacaoFacade {
 		Aluno a1 = new Aluno("a1","a1","a1");
 		this.getBd().getAlunos().add(a1);
 		
-		boolean loginFlag = true;
+		this.setLoginFlag(true);
 		
-		while(loginFlag == true) {
+		while(this.getLoginFlag() == true) {
 			System.out.println("Voce e aluno ou professor?\n1- Aluno\n2-Professor");
 			String tipoUsuario = this.getScanner().nextLine();
 			
@@ -111,37 +121,50 @@ public class AutenticacaoFacade {
 			System.out.println("senha:");
 			String senha = this.getScanner().nextLine();
 			
-			
-			if (this.getBd().consultarLogin(login) == false) {
-				System.out.println("Usuario nao encontrado");
+			try {
+				this.loginAutenticacao(tipoUsuario, login, senha);
+			} catch (UsuarioInexistenteException uie) {
+				System.out.println(uie.getMessage() + "\n===============================================================");		
+
+			} catch (EntradaInvalidaException eie) {
+				System.out.println(eie.getMessage() + "\n===============================================================");		
 			}
-			else {
-				switch(tipoUsuario) {
-				case "1":
-					if(this.getBd().validarSenhaAluno(login, senha) == false) {
-						System.out.println("Senha invalida para Aluno");
-					}else {
+		}
+	}
+	public void loginAutenticacao(String tipoUsuario, String login, String senha) throws UsuarioInexistenteException,EntradaInvalidaException{
+		if (this.getBd().consultarLogin(login) == false) {
+			throw new UsuarioInexistenteException();
+		}
+		else {
+			switch(tipoUsuario) {
+			case "1":
+				try {
+					if(this.getBd().validarSenhaAluno(login, senha) == true) {
 						System.out.println("Login realizado com sucesso como Aluno");
 						this.getMenuUsuario().MenuAluno(this.getBd(), login);
-						loginFlag = false;
+						this.setLoginFlag(false);
 					}
-					break;
-				case "2":
-					if(this.getBd().validarSenhaProfessor(login, senha) == false) {
-						System.out.println("Senha invalida para Professor");
-					}else {
+				} catch (SenhaInvalidaException sie) {
+					System.out.println(sie.getMessage() + "\n===============================================================");		
+				}
+				break;
+			case "2":
+				try {
+					if(this.getBd().validarSenhaProfessor(login, senha) == true) {
 						System.out.println("Login realizado com sucesso como Professor");
 						this.getMenuUsuario().MenuProfessor(this.getBd(), login);
-						loginFlag = false;
+						this.setLoginFlag(false);
 						
 					}
-					break;
-				case "0":
-					loginFlag = false;
-					break;
-				default:
-					System.out.println("erro");
+				} catch (SenhaInvalidaException sie) {
+					System.out.println(sie.getMessage() + "\n===============================================================");		
 				}
+				break;
+			case "0":
+				this.setLoginFlag(false);
+				break;
+			default:
+				throw new EntradaInvalidaException();
 			}
 		}
 	}

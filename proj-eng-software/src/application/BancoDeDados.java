@@ -2,6 +2,7 @@ package application;
 import java.util.ArrayList;
 
 import exceptions.LoginExistenteException;
+import exceptions.SenhaInvalidaException;
 
 public class BancoDeDados {
 	private ArrayList<Aluno> alunos = new ArrayList<Aluno>();
@@ -93,25 +94,25 @@ public class BancoDeDados {
 		}
 		return false;
 	}
-	public boolean validarSenhaProfessor(String login,String senha) {
+	public boolean validarSenhaProfessor(String login,String senha) throws SenhaInvalidaException{
 		for (Professor professor : getProfessores()) {
 			if(professor.getLogin().equals(login)) {
-				if(professor.getSenha().equals(senha)) {
-					return true;
+				if(!professor.getSenha().equals(senha)) {
+					throw new SenhaInvalidaException();
 				}
 			}
 		}
-		return false;
+		return true;
 	}
-	public boolean validarSenhaAluno(String login, String senha) {
+	public boolean validarSenhaAluno(String login, String senha) throws SenhaInvalidaException{
 		for (Aluno aluno : getAlunos()) {
 			if(aluno.getLogin().equals(login)) {
-				if(aluno.getSenha().equals(senha)) {
-					return true;
+				if(!aluno.getSenha().equals(senha)) {
+					throw new SenhaInvalidaException();
 				}
 			}			
 		}
-		return false;
+		return true;
 	}
 	public void cadastrarDisciplina(Disciplina disciplina) {
 		this.getDisciplinas().add(disciplina);
