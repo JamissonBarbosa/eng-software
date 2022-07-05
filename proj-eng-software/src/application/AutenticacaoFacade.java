@@ -3,12 +3,21 @@ package application;
 import java.util.Calendar;
 import java.util.Scanner;
 
+import exceptions.EntradaInvalidaException;
+import exceptions.LoginExistenteException;
+
 public class AutenticacaoFacade {
 	private Scanner scanner = new Scanner(System.in);
 	private BancoDeDados bd = new BancoDeDados();
 	private MenuUsuarioFacade menuUsuario = new MenuUsuarioFacade();
-
+	private boolean cadastroFlag;
 	
+	public boolean getCadastroFlag() {
+		return cadastroFlag;
+	}
+	public void setCadastroFlag(boolean cadastroFlag) {
+		this.cadastroFlag = cadastroFlag;
+	}
 	public Scanner getScanner() {
 		return scanner;
 	}
@@ -30,12 +39,12 @@ public class AutenticacaoFacade {
 	}
 	public void cadastro() {
 		
-		System.out.println("Voce e um:\n1- Aluno\n2- Professor");
-		String tipoUsuario = this.getScanner().nextLine();
+		this.setCadastroFlag(true);
 		
-		boolean cadastroFlag = true;
-		
-		while(cadastroFlag == true) {
+		while(this.getCadastroFlag() == true) {
+			System.out.println("Voce e um:\n1- Aluno\n2- Professor");
+			String tipoUsuario = this.getScanner().nextLine();
+			
 			System.out.println("Nome: ");
 			String nome = this.getScanner().nextLine();
 			System.out.println("login: ");
@@ -43,32 +52,43 @@ public class AutenticacaoFacade {
 			System.out.println("senha: ");
 			String senha = this.getScanner().nextLine();
 			
-			if (this.getBd().consultarLogin(login) == true){
-				System.out.println("Login ja existente, tente novamente");
-			}else {
-				switch(tipoUsuario) {
-				case "1":
-					
-					Aluno aluno = new Aluno(nome,login,senha);
-					this.getBd().cadastrarAluno(aluno);
-					aluno.gerarMatriculaTemplateMethod(this.getBd().recuperarMatriculasAlunos().size(),Calendar.getInstance().get(Calendar.YEAR));
-					cadastroFlag = false;
-					break;
-				case "2":
-					Professor professor = new Professor(nome,login,senha);
-					this.getBd().cadastrarProfessor(professor);
-					professor.gerarMatriculaTemplateMethod(this.getBd().recuperarMatriculasProfessores().size(),Calendar.getInstance().get(Calendar.YEAR));
-					cadastroFlag = false;
-					break;
-				case "0":
-					cadastroFlag = false;
-					break;
-				default:
-					System.out.println("Entrada inválida.");
-					break;
-				}
-			}			
+			try {
+				this.CadastroValidacao(tipoUsuario, nome, login, senha);
+			} catch (EntradaInvalidaException eie) {
+				System.out.println(eie.getMessage()+"\n===============================================================");
+			}		
 		}		
+	}
+	
+	public void CadastroValidacao(String tipoUsuario,String nome,String login,String senha) throws EntradaInvalidaException{
+		switch(tipoUsuario) {
+		case "1":
+			
+			Aluno aluno = new Aluno(nome,login,senha);
+			try {
+				this.getBd().cadastrarAluno(aluno);
+				aluno.gerarMatriculaTemplateMethod(this.getBd().recuperarMatriculasAlunos().size(),Calendar.getInstance().get(Calendar.YEAR));
+				this.setCadastroFlag(false);
+			} catch (LoginExistenteException lee) {
+				System.out.println(lee.getMessage()+"\n===============================================================");
+			}
+			
+			break;
+		case "2":
+			Professor professor = new Professor(nome,login,senha);
+			try {
+				this.getBd().cadastrarProfessor(professor);
+				professor.gerarMatriculaTemplateMethod(this.getBd().recuperarMatriculasProfessores().size(),Calendar.getInstance().get(Calendar.YEAR));
+				this.setCadastroFlag(false);
+			} catch (LoginExistenteException lee) {
+				System.out.println(lee.getMessage()+"\n===============================================================");
+			}
+			break;
+		case "0":
+			this.setCadastroFlag(false);
+		default:
+			throw new EntradaInvalidaException();
+		}
 	}
 	
 	public void login() {

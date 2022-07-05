@@ -1,6 +1,8 @@
 package application;
 import java.util.ArrayList;
 
+import exceptions.LoginExistenteException;
+
 public class BancoDeDados {
 	private ArrayList<Aluno> alunos = new ArrayList<Aluno>();
 	private ArrayList<Professor> professores = new ArrayList<Professor>();
@@ -25,8 +27,15 @@ public class BancoDeDados {
 	public void setDisciplinas(ArrayList<Disciplina> disciplinas) {
 		this.disciplinas = disciplinas;
 	}
-	public void cadastrarAluno(Aluno novoAluno) {
-		getAlunos().add(novoAluno);
+	public void cadastrarAluno(Aluno novoAluno) throws LoginExistenteException{
+		if(this.consultarLogin(novoAluno.getLogin()) == false) {
+			getAlunos().add(novoAluno);
+		}
+		else {
+			throw new LoginExistenteException();
+		}
+		
+		
 	}
 	
 	public boolean consultarAluno(Aluno aluno) {
@@ -47,8 +56,13 @@ public class BancoDeDados {
 		return matriculasAlunos;
 	}
 	
-	public void cadastrarProfessor(Professor novoProfessor) {
-		getProfessores().add(novoProfessor);
+	public void cadastrarProfessor(Professor novoProfessor) throws LoginExistenteException{
+		if(this.consultarLogin(novoProfessor.getLogin())==false) {
+			getProfessores().add(novoProfessor);
+		}
+		else {
+			throw new LoginExistenteException();
+		}
 	}
 	
 	public boolean consultarProfessor(Professor professor) {

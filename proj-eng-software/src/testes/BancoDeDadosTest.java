@@ -4,12 +4,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import application.Aluno;
 import application.BancoDeDados;
 import application.Disciplina;
 import application.Professor;
+import exceptions.LoginExistenteException;
 
 class BancoDeDadosTest {
 	
@@ -21,124 +23,137 @@ class BancoDeDadosTest {
 	private Disciplina d1 = new Disciplina("d1","p1","ementa 1");
 	private Disciplina d2 = new Disciplina("d2","p2","ementa 2");
 
+	@BeforeEach
+	 void setUp(){
+		try {
+			bd.cadastrarAluno(a1);
+			a1.gerarMatriculaTemplateMethod(1, 2022);
+
+			bd.cadastrarProfessor(p1);
+			p1.gerarMatriculaTemplateMethod(1, 2022);
+
+		} catch (LoginExistenteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	@Test
 	void testCadastrarAluno1() {
-		bd.cadastrarAluno(a1);
-		assertEquals(bd.getAlunos().contains(a1),true);
+		try {
+			bd.cadastrarAluno(a1);
+			fail("Login existente foi erroneamente aceito.");
+		} catch (LoginExistenteException e) {
+			e.printStackTrace();
+		}
 	}
 	@Test
 	void testCadastrarAluno2() {
-		bd.cadastrarAluno(a1);
-		assertEquals(bd.getAlunos().contains(a2),false);
+		try {
+			bd.cadastrarAluno(a2);
+		} catch (LoginExistenteException e) {
+			fail("Login existente foi indevidamente encontrado.");
+		}
 	}
 
 	@Test
 	void testConsultarAluno1() {
-		bd.cadastrarAluno(a1);
 		assertEquals(bd.consultarAluno(a1),true);	
 	}
 	@Test
 	void testConsultarAluno2() {
-		bd.cadastrarAluno(a1);
 		assertEquals(bd.consultarAluno(a2),false);	
 	}
 
 	@Test
 	void testRecuperarMatriculasAlunos() {
-		bd.cadastrarAluno(a1);
-		bd.cadastrarAluno(a2);
+		try {
+			bd.cadastrarAluno(a2);
+			a2.gerarMatriculaTemplateMethod(2, 2022);
+			
+			ArrayList<String> matriculasAlunos = new ArrayList<String>();
+			matriculasAlunos.add(a1.getMatricula());
+			matriculasAlunos.add(a2.getMatricula());
+			
+			assertEquals(matriculasAlunos,bd.recuperarMatriculasAlunos());
+		} catch (LoginExistenteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		a1.gerarMatriculaTemplateMethod(1, 2022);
-		a2.gerarMatriculaTemplateMethod(2, 2022);
 		
-		ArrayList<String> matriculasAlunos = new ArrayList<String>();
-		matriculasAlunos.add(a1.getMatricula());
-		matriculasAlunos.add(a2.getMatricula());
-		
-		assertEquals(matriculasAlunos,bd.recuperarMatriculasAlunos());
 	}
 
 	@Test
 	void testCadastrarProfessor1() {
-		bd.cadastrarProfessor(p1);
 		assertEquals(bd.getProfessores().contains(p1),true);
 	}
 	@Test
 	void testCadastrarProfessor2() {
-		bd.cadastrarProfessor(p1);
 		assertEquals(bd.getProfessores().contains(p2),false);
 	}
 
 	@Test
 	void testConsultarProfessor1() {
-		bd.cadastrarProfessor(p1);
 		assertEquals(bd.consultarProfessor(p1),true);	
 	}
 	@Test
 	void testConsultarProfessor2() {
-		bd.cadastrarProfessor(p1);
 		assertEquals(bd.consultarProfessor(p2),false);	
 	}
 	@Test
 	void testRecuperarMatriculasProfessores() {
-		bd.cadastrarProfessor(p1);
-		bd.cadastrarProfessor(p2);
-		
-		p1.gerarMatriculaTemplateMethod(1, 2022);
-		p2.gerarMatriculaTemplateMethod(2, 2022);
-		
-		ArrayList<String> matriculasProfessores = new ArrayList<String>();
-		matriculasProfessores.add(p1.getMatricula());
-		matriculasProfessores.add(p2.getMatricula());
-		
-		assertEquals(matriculasProfessores,bd.recuperarMatriculasProfessores());
+		try {
+			bd.cadastrarProfessor(p2);
+			p2.gerarMatriculaTemplateMethod(2, 2022);
+			
+			ArrayList<String> matriculasProfessores = new ArrayList<String>();
+			matriculasProfessores.add(p1.getMatricula());
+			matriculasProfessores.add(p2.getMatricula());
+			
+			assertEquals(matriculasProfessores,bd.recuperarMatriculasProfessores());
+		} catch (LoginExistenteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Test
 	void testConsultarLogin1() {
-		bd.cadastrarAluno(a1);
 		
 		assertEquals(bd.consultarLogin(a1.getLogin()),true);
 	}
 	@Test
 	void testConsultarLogin2() {
-		bd.cadastrarProfessor(p1);
 		
 		assertEquals(bd.consultarLogin(p1.getLogin()),true);
 	}
 	@Test
 	void testConsultarLogin3() {
-		bd.cadastrarAluno(a1);
 		
 		assertEquals(bd.consultarLogin(a2.getLogin()),false);
 	}
 
 	@Test
 	void testValidarSenhaProfessor1() {
-		
-		bd.cadastrarProfessor(p1);
-		
+				
 		assertEquals(bd.validarSenhaProfessor(p1.getLogin(), p1.getSenha()),true);
 	}
 	
 	@Test
 	void testValidarSenhaProfessor2() {
 		
-		bd.cadastrarProfessor(p1);
-
 		assertEquals(bd.validarSenhaProfessor(p2.getLogin(), p2.getSenha()),false);
 	}
 
 	@Test
 	void testValidarSenhaAluno1() {
-		bd.cadastrarAluno(a1);
 		
 		assertEquals(bd.validarSenhaAluno(a1.getLogin(), a1.getSenha()),true);
 
 	}
 	@Test
 	void testValidarSenhaAluno2() {
-		bd.cadastrarAluno(a1);
 		
 		assertEquals(bd.validarSenhaAluno(a2.getLogin(), a2.getSenha()),false);
 
