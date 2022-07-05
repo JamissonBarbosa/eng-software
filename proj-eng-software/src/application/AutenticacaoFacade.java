@@ -64,7 +64,7 @@ public class AutenticacaoFacade {
 					cadastroFlag = false;
 					break;
 				default:
-					System.out.println("erro");
+					System.out.println("Entrada inválida.");
 					break;
 				}
 			}			
