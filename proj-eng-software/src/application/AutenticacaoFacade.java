@@ -122,7 +122,7 @@ public class AutenticacaoFacade {
 			String senha = this.getScanner().nextLine();
 			
 			try {
-				this.loginAutenticacao(tipoUsuario, login, senha);
+				this.loginValidacao(tipoUsuario, login, senha);
 			} catch (UsuarioInexistenteException uie) {
 				System.out.println(uie.getMessage() + "\n===============================================================");		
 
@@ -131,7 +131,7 @@ public class AutenticacaoFacade {
 			}
 		}
 	}
-	public void loginAutenticacao(String tipoUsuario, String login, String senha) throws UsuarioInexistenteException,EntradaInvalidaException{
+	public void loginValidacao(String tipoUsuario, String login, String senha) throws UsuarioInexistenteException,EntradaInvalidaException{
 		if (this.getBd().consultarLogin(login) == false) {
 			throw new UsuarioInexistenteException();
 		}
