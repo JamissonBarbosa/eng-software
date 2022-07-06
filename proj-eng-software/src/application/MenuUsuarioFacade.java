@@ -55,9 +55,7 @@ public class MenuUsuarioFacade {
 				funcionalidadeFlag = false;
 				break;
 			case "1":
-				for(Disciplina disciplina : this.getProfessor().getDisciplinas()) {
-					System.out.println(this.getProfessor().getDisciplinas().indexOf(disciplina)+1 +"- "+ disciplina.getNome());
-				}
+				this.getProfessor().listarDisciplinas();
 				break;
 			case "2":
 				System.out.println("Nome da disciplina: ");

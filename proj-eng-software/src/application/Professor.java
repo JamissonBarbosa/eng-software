@@ -21,7 +21,15 @@ public class Professor extends Usuario{
 			}
 		}
 		return false;
-		
+	}
+	
+	public String listarDisciplinas() {
+		String lista = "";
+		for(Disciplina disciplina : this.getDisciplinas()) {
+			lista += this.getDisciplinas().indexOf(disciplina)+1 +"- "+ disciplina.getNome()+"\n";
+		}
+		System.out.println("Suas disciplinas:\n"+lista);
+		return lista;
 	}
 
 

@@ -31,5 +31,17 @@ class ProfessorTest {
 		
 		assertEquals(p1.disciplinaExistente(d2),false);
 	}
+	@Test
+	void testListarDisciplinas() {
+		p1.getDisciplinas().add(d1);
+		p1.getDisciplinas().add(d2);
+		
+
+		String lista = p1.getDisciplinas().indexOf(d1)+1 +"- "+ d1.getNome()+"\n";
+		lista += p1.getDisciplinas().indexOf(d2)+1 +"- "+ d2.getNome()+"\n";
+		
+		assertEquals(p1.listarDisciplinas(),lista);
+
+	}
 
 }

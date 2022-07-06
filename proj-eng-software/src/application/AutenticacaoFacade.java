@@ -102,13 +102,6 @@ public class AutenticacaoFacade {
 	}
 	
 	public void login() {
-		/*disciplinas e aluno de teste*/
-		Disciplina d1 = new Disciplina("d1","abc","abc");
-		this.getBd().getDisciplinas().add(d1);
-		Disciplina d2 = new Disciplina("d2","abc","abc");
-		this.getBd().getDisciplinas().add(d2);
-		Aluno a1 = new Aluno("a1","a1","a1");
-		this.getBd().getAlunos().add(a1);
 		
 		this.setLoginFlag(true);
 		
