@@ -65,7 +65,7 @@ public class MenuUsuarioFacade {
 		boolean funcionalidadeFlag = true;
 		
 		while (funcionalidadeFlag == true) {
-			System.out.println("0- Sair\n1- Listar disciplinas\n2- Criar nova disciplina\n3- Excluir disciplina");
+			System.out.println("0- Sair\n1- Listar disciplinas\n2- Criar nova disciplina\n");
 			String funcionalidade = this.getScFuncionalidade().nextLine();
 			
 			switch(funcionalidade) {

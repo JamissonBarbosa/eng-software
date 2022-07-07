@@ -55,12 +55,18 @@ public class AutenticacaoFacade {
 			System.out.println("Voce e um:\n0- Sair\n1- Aluno\n2- Professor");
 			String tipoUsuario = this.getScanner().nextLine();
 			
-			System.out.println("Nome: ");
-			String nome = this.getScanner().nextLine();
-			System.out.println("login: ");
-			String login = this.getScanner().nextLine();
-			System.out.println("senha: ");
-			String senha = this.getScanner().nextLine();
+			String nome = "";
+			String login = "";
+			String senha = "";
+			
+			if(tipoUsuario.equals("1") || tipoUsuario.equals("2")) {
+				System.out.println("Nome: ");
+				nome = this.getScanner().nextLine();
+				System.out.println("login: ");
+				login = this.getScanner().nextLine();
+				System.out.println("senha: ");
+				senha = this.getScanner().nextLine();
+			}
 			
 			try {
 				this.CadastroValidacao(tipoUsuario, nome, login, senha);
@@ -96,6 +102,7 @@ public class AutenticacaoFacade {
 			break;
 		case "0":
 			this.setCadastroFlag(false);
+			break;
 		default:
 			throw new EntradaInvalidaException();
 		}
@@ -106,13 +113,18 @@ public class AutenticacaoFacade {
 		this.setLoginFlag(true);
 		
 		while(this.getLoginFlag() == true) {
-			System.out.println("Voce e aluno ou professor?\n1- Aluno\n2-Professor");
+			System.out.println("Voce e aluno ou professor?\n0- Sair\n1- Aluno\n2-Professor");
 			String tipoUsuario = this.getScanner().nextLine();
 			
-			System.out.println("login:");
-			String login = this.getScanner().nextLine();
-			System.out.println("senha:");
-			String senha = this.getScanner().nextLine();
+			String login = "";
+			String senha = "";
+			
+			if(tipoUsuario.equals("1") || tipoUsuario.equals("2")) {
+				System.out.println("login: ");
+				login = this.getScanner().nextLine();
+				System.out.println("senha: ");
+				senha = this.getScanner().nextLine();
+			}
 			
 			try {
 				this.loginValidacao(tipoUsuario, login, senha);
@@ -125,7 +137,9 @@ public class AutenticacaoFacade {
 		}
 	}
 	public void loginValidacao(String tipoUsuario, String login, String senha) throws UsuarioInexistenteException,EntradaInvalidaException{
-		if (this.getBd().consultarLogin(login) == false) {
+		
+		
+		if (this.getBd().consultarLogin(login) == false && !tipoUsuario.equals("0")) {
 			throw new UsuarioInexistenteException();
 		}
 		else {
