@@ -2,6 +2,10 @@ package application;
 
 import java.util.Scanner;
 
+import exceptions.DisciplinaExistenteException;
+import exceptions.EntradaInvalidaException;
+import exceptions.LimiteDisciplinaException;
+
 public class MenuUsuarioFacade {
 	private Professor professor;
 	private Aluno aluno;
@@ -40,10 +44,13 @@ public class MenuUsuarioFacade {
 	public MenuUsuarioFacade(){}
 	
 	
-	public void MenuProfessor(BancoDeDados bd, String professorLogin) {
+	public void MenuProfessor(BancoDeDados bd, String professorLogin) throws EntradaInvalidaException{
 		Scanner scCriarDisciplina = new Scanner(System.in);
-
 		this.setProfessor(professorLogin, bd);
+		
+		System.out.println("Login realizado com sucesso como Professor");
+
+		
 		boolean funcionalidadeFlag = true;
 		
 		while (funcionalidadeFlag == true) {
@@ -63,29 +70,27 @@ public class MenuUsuarioFacade {
 				System.out.println("Ementa da disciplina: ");
 				String ementaDisciplina = scCriarDisciplina.nextLine();
 				Disciplina disciplina = new Disciplina(nomeDisciplina,this.professor.getNome(),ementaDisciplina);
-				if(this.getProfessor().disciplinaExistente(disciplina) == true) {
-					System.out.println("Disciplina ja existente.");
-				}
-				else {
-					if(this.getProfessor().getDisciplinas().size() > 4) {
-						System.out.println("Numero maximo de disciplinas alcancado (5)");
-					}
-					else {
-						this.getProfessor().getDisciplinas().add(disciplina);
-						bd.getDisciplinas().add(disciplina);
-						System.out.println("Disciplina criada com sucesso!");
-					}
-				}	
+				this.criarDisciplina(disciplina, bd);	
 				break;
 			case "3":
 				break;
 			default:
-				System.out.println("Insira um valor valido!");
-				break;
+				throw new EntradaInvalidaException();
 			}
 		}
-		
-		
+	}
+	public void criarDisciplina(Disciplina disciplina, BancoDeDados bd) {
+		try {
+			if(this.getProfessor().disciplinaExistente(disciplina) == false) {
+				try {
+					this.getProfessor().adicionarDisciplina(disciplina, bd);
+				} catch (LimiteDisciplinaException lde) {
+					System.out.println(lde.getMessage()); 
+				}
+			}
+		} catch (DisciplinaExistenteException dee) {
+			System.out.println(dee.getMessage()); 
+		}
 	}
 	
 	public void MenuAluno(BancoDeDados bd, String alunoLogin) {

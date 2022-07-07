@@ -1,5 +1,7 @@
 package application;
 
+import exceptions.DisciplinaExistenteException;
+import exceptions.LimiteDisciplinaException;
 
 public class Professor extends Usuario{
 
@@ -14,10 +16,10 @@ public class Professor extends Usuario{
 		
 	}
 	
-	public boolean disciplinaExistente(Disciplina novaDisciplina){
+	public boolean disciplinaExistente(Disciplina novaDisciplina) throws DisciplinaExistenteException{
 		for(Disciplina disciplina : this.getDisciplinas()) {
 			if (disciplina.getNome().equals(novaDisciplina.getNome())){
-				return true;
+				throw new DisciplinaExistenteException();
 			}
 		}
 		return false;
@@ -32,6 +34,15 @@ public class Professor extends Usuario{
 		return lista;
 	}
 
+	public void adicionarDisciplina(Disciplina disciplina, BancoDeDados bd) throws LimiteDisciplinaException{
+		if(this.getDisciplinas().size() < 5) {
+			this.getDisciplinas().add(disciplina);
+			bd.getDisciplinas().add(disciplina);
+			System.out.println("Disciplina criada com sucesso");
+		}else {
+			throw new LimiteDisciplinaException();
+		}
+	}
 
 
     /*public List<Aluno> addAluno(String name, int matricula){

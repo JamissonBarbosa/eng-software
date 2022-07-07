@@ -144,7 +144,6 @@ public class AutenticacaoFacade {
 			case "2":
 				try {
 					if(this.getBd().validarSenhaProfessor(login, senha) == true) {
-						System.out.println("Login realizado com sucesso como Professor");
 						this.getMenuUsuario().MenuProfessor(this.getBd(), login);
 						this.setLoginFlag(false);
 						
