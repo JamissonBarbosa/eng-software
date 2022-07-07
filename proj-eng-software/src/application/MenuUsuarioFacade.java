@@ -133,7 +133,6 @@ public class MenuUsuarioFacade {
 					try {
 						this.MatricularAluno(matricula, bd);
 					} catch (AlunoMatriculadoException | EntradaInvalidaException e) {
-						// TODO Auto-generated catch block
 						System.out.println(e.getMessage());
 					}
 				}

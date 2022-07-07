@@ -35,7 +35,7 @@ public class Professor extends Usuario{
 	}
 
 	public void adicionarDisciplina(Disciplina disciplina, BancoDeDados bd) throws LimiteDisciplinaException{
-		if(this.getDisciplinas().size() < 5) {
+		if(this.getDisciplinas().size() < 4) {
 			this.getDisciplinas().add(disciplina);
 			bd.getDisciplinas().add(disciplina);
 			System.out.println("Disciplina criada com sucesso");
@@ -44,13 +44,4 @@ public class Professor extends Usuario{
 		}
 	}
 
-
-    /*public List<Aluno> addAluno(String name, int matricula){
-        Aluno a = new Aluno(name, matricula);
-
-        List<Aluno> aluno = new ArrayList<Aluno>();
-
-        aluno.add(a);
-        return aluno;
-    }*/
 }
