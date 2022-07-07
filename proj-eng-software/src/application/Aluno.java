@@ -12,5 +12,15 @@ public class Aluno extends Usuario{;
 		this.setMatricula("AL");
 		
 	}
+	
+	public String listarDisciplinas() {
+		String lista = "";
+		for(Disciplina disciplina : this.getDisciplinas()) {
+			int indexDisciplina = this.getDisciplinas().indexOf(disciplina)+1;
+			lista += indexDisciplina +"- "+ disciplina.getNome();
+		}
+		System.out.println(lista);
+		return lista;
+	}
 
 }

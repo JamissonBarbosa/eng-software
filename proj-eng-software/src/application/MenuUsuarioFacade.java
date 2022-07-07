@@ -2,6 +2,7 @@ package application;
 
 import java.util.Scanner;
 
+import exceptions.AlunoMatriculadoException;
 import exceptions.DisciplinaExistenteException;
 import exceptions.EntradaInvalidaException;
 import exceptions.LimiteDisciplinaException;
@@ -10,6 +11,8 @@ public class MenuUsuarioFacade {
 	private Professor professor;
 	private Aluno aluno;
 	private Scanner scFuncionalidade = new Scanner(System.in);
+	private boolean matriculaFlag = true;
+
 
 	public Professor getProfessor() {
 		return professor;
@@ -39,6 +42,14 @@ public class MenuUsuarioFacade {
 
 	public Scanner getScFuncionalidade() {
 		return scFuncionalidade;
+	}
+
+	public boolean getMatriculaFlag() {
+		return matriculaFlag;
+	}
+
+	public void setMatriculaFlag(boolean matriculaFlag) {
+		this.matriculaFlag = matriculaFlag;
 	}
 
 	public MenuUsuarioFacade(){}
@@ -93,7 +104,7 @@ public class MenuUsuarioFacade {
 		}
 	}
 	
-	public void MenuAluno(BancoDeDados bd, String alunoLogin) {
+	public void MenuAluno(BancoDeDados bd, String alunoLogin) throws EntradaInvalidaException{
 		Scanner scMatricula = new Scanner(System.in);
 		this.setAluno(alunoLogin, bd);
 		boolean funcionalidadeFlag = true;
@@ -107,44 +118,47 @@ public class MenuUsuarioFacade {
 				funcionalidadeFlag = false;
 				break;
 			case "1":
-				for(Disciplina disciplina : this.getAluno().getDisciplinas()) {
-					int indexDisciplina = this.getAluno().getDisciplinas().indexOf(disciplina)+1;
-					System.out.println( indexDisciplina +"- "+ disciplina.getNome());
-				}
+				this.getAluno().listarDisciplinas();
 				break;
 			case "2":
-				boolean matriculaFlag = true;
+				this.setMatriculaFlag(true);
 				
-				while(matriculaFlag == true) {
+				while(this.getMatriculaFlag() == true) {
 					System.out.println("Selecione as disciplinas que deseja matricular-se:\n0- Sair");
 					for (Disciplina disciplina : bd.getDisciplinas()) {
 						int indexDisciplina = bd.getDisciplinas().indexOf(disciplina)+1;
 						System.out.println(indexDisciplina +"- "+ disciplina.getNome() + ", professor: "+disciplina.getProfessor()+", ementa: "+disciplina.getEmenta());
 					}
 					int matricula = scMatricula.nextInt();
-					if (matricula == 0) {
-						matriculaFlag = false;
-					}else {
-						for(Disciplina disciplina : bd.getDisciplinas()) {
-							if (bd.getDisciplinas().indexOf(disciplina)==matricula-1) {
-								if (this.getAluno().getDisciplinas().contains(disciplina)){
-									System.out.println("Voce ja esta matriculado nesta disciplina");
-									break;
-								}else {
-									aluno.getDisciplinas().add(disciplina);
-									System.out.println("A matricula na disciplina "+ disciplina.getNome() +" foi realizada com sucesso.");
-								}
-							break;
-							}
-
-						}
+					try {
+						this.MatricularAluno(matricula, bd);
+					} catch (AlunoMatriculadoException | EntradaInvalidaException e) {
+						// TODO Auto-generated catch block
+						System.out.println(e.getMessage());
 					}
 				}
 				break;
 				default:
-					System.out.println("Opcao invalida");
+					throw new EntradaInvalidaException();
 			}
 		}
 	}
-	
+	public void MatricularAluno(int matricula, BancoDeDados bd) throws AlunoMatriculadoException, EntradaInvalidaException {
+		if(matricula == 0) {
+			this.setMatriculaFlag(true);
+		}else {
+			for(Disciplina disciplina : bd.getDisciplinas()) {
+				if (bd.getDisciplinas().indexOf(disciplina)==matricula-1) {
+					if (this.getAluno().getDisciplinas().contains(disciplina)){
+						throw new AlunoMatriculadoException();
+					}else {
+						aluno.getDisciplinas().add(disciplina);
+						System.out.println("A matricula na disciplina "+ disciplina.getNome() +" foi realizada com sucesso.");
+					}
+				break;
+				}
+			}
+		}
+		throw new EntradaInvalidaException();
+	}
 }
