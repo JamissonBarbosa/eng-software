@@ -12,22 +12,15 @@ public class BancoDeDados {
 	public ArrayList<Aluno> getAlunos() {
 		return alunos;
 	}
-	public void setAlunos(ArrayList<Aluno> alunos) {
-		this.alunos = alunos;
-	}
+
 	public ArrayList<Professor> getProfessores() {
 		return professores;
-	}
-	public void setProfessores(ArrayList<Professor> professores) {
-		this.professores = professores;
 	}
 
 	public ArrayList<Disciplina> getDisciplinas() {
 		return disciplinas;
 	}
-	public void setDisciplinas(ArrayList<Disciplina> disciplinas) {
-		this.disciplinas = disciplinas;
-	}
+	
 	public void cadastrarAluno(Aluno novoAluno) throws LoginExistenteException{
 		if(this.consultarLogin(novoAluno.getLogin()) == false) {
 			getAlunos().add(novoAluno);

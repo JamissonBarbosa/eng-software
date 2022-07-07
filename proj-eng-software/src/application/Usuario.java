@@ -53,10 +53,6 @@ public abstract class Usuario{
 		return disciplinas;
 	}
 
-	public void setDisciplinas(ArrayList<Disciplina> disciplinas) {
-		this.disciplinas = disciplinas;
-	}
-
 	public void gerarMatriculaTemplateMethod(int tamanho, int ano) {
 		this.prefixo();
 		this.numSufixo(tamanho);

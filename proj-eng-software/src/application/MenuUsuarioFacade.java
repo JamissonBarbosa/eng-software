@@ -129,11 +129,11 @@ public class MenuUsuarioFacade {
 						int indexDisciplina = bd.getDisciplinas().indexOf(disciplina)+1;
 						System.out.println(indexDisciplina +"- "+ disciplina.getNome() + ", professor: "+disciplina.getProfessor()+", ementa: "+disciplina.getEmenta());
 					}
-					int matricula = scMatricula.nextInt();
+					String matricula = scMatricula.nextLine();
 					try {
 						this.MatricularAluno(matricula, bd);
-					} catch (AlunoMatriculadoException | EntradaInvalidaException e) {
-						System.out.println(e.getMessage());
+					} catch (AlunoMatriculadoException ame) {
+						System.out.println(ame.getMessage());
 					}
 				}
 				break;
@@ -142,12 +142,14 @@ public class MenuUsuarioFacade {
 			}
 		}
 	}
-	public void MatricularAluno(int matricula, BancoDeDados bd) throws AlunoMatriculadoException, EntradaInvalidaException {
-		if(matricula == 0) {
+	public void MatricularAluno(String matricula, BancoDeDados bd) throws AlunoMatriculadoException {
+		try{	
+		int matriculaInt = Integer.parseInt(matricula);
+		if(matriculaInt == 0) {
 			this.setMatriculaFlag(true);
 		}else {
 			for(Disciplina disciplina : bd.getDisciplinas()) {
-				if (bd.getDisciplinas().indexOf(disciplina)==matricula-1) {
+				if (bd.getDisciplinas().indexOf(disciplina)==matriculaInt-1) {
 					if (this.getAluno().getDisciplinas().contains(disciplina)){
 						throw new AlunoMatriculadoException();
 					}else {
@@ -158,6 +160,8 @@ public class MenuUsuarioFacade {
 				}
 			}
 		}
-		throw new EntradaInvalidaException();
+		} catch(NumberFormatException nfe) {
+			System.out.println(nfe.getMessage());
+		}		
 	}
 }

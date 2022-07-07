@@ -52,7 +52,7 @@ public class AutenticacaoFacade {
 		this.setCadastroFlag(true);
 		
 		while(this.getCadastroFlag() == true) {
-			System.out.println("Voce e um:\n1- Aluno\n2- Professor");
+			System.out.println("Voce e um:\n0- Sair\n1- Aluno\n2- Professor");
 			String tipoUsuario = this.getScanner().nextLine();
 			
 			System.out.println("Nome: ");
