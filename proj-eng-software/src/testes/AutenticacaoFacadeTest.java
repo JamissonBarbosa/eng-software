@@ -31,7 +31,7 @@ class AutenticacaoFacadeTest {
 			e.printStackTrace();
 		}
 	}
-/*
+/* Este teste aciona métodos que necessitam de entradas do usuário.
 	@Test
 	void testLoginValidacao1() {
 		autenticacao.getBd().getAlunos().add(joao);
