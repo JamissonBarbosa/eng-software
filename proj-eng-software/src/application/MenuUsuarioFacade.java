@@ -55,7 +55,7 @@ public class MenuUsuarioFacade {
 	public MenuUsuarioFacade(){}
 	
 	
-	public void MenuProfessor(BancoDeDados bd, String professorLogin) throws EntradaInvalidaException{
+	public void menuProfessor(BancoDeDados bd, String professorLogin) throws EntradaInvalidaException{
 		Scanner scCriarDisciplina = new Scanner(System.in);
 		this.setProfessor(professorLogin, bd);
 		
@@ -104,7 +104,7 @@ public class MenuUsuarioFacade {
 		}
 	}
 	
-	public void MenuAluno(BancoDeDados bd, String alunoLogin) throws EntradaInvalidaException{
+	public void menuAluno(BancoDeDados bd, String alunoLogin) throws EntradaInvalidaException{
 		Scanner scMatricula = new Scanner(System.in);
 		this.setAluno(alunoLogin, bd);
 		boolean funcionalidadeFlag = true;
@@ -131,7 +131,7 @@ public class MenuUsuarioFacade {
 					}
 					String matricula = scMatricula.nextLine();
 					try {
-						this.MatricularAluno(matricula, bd);
+						this.matricularAluno(matricula, bd);
 					} catch (AlunoMatriculadoException ame) {
 						System.out.println(ame.getMessage()+"\n===============================================================");
 					}
@@ -142,7 +142,7 @@ public class MenuUsuarioFacade {
 			}
 		}
 	}
-	public void MatricularAluno(String matricula, BancoDeDados bd) throws AlunoMatriculadoException {
+	public void matricularAluno(String matricula, BancoDeDados bd) throws AlunoMatriculadoException {
 		try{	
 		int matriculaInt = Integer.parseInt(matricula);
 		if(matriculaInt == 0) {

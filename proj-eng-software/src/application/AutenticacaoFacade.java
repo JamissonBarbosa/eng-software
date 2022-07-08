@@ -148,7 +148,7 @@ public class AutenticacaoFacade {
 				try {
 					if(this.getBd().validarSenhaAluno(login, senha) == true) {
 						System.out.println("Login realizado com sucesso como Aluno\n===============================================================");
-						this.getMenuUsuario().MenuAluno(this.getBd(), login);
+						this.getMenuUsuario().menuAluno(this.getBd(), login);
 						this.setLoginFlag(false);
 					}
 				} catch (SenhaInvalidaException sie) {
@@ -158,7 +158,7 @@ public class AutenticacaoFacade {
 			case "2":
 				try {
 					if(this.getBd().validarSenhaProfessor(login, senha) == true) {
-						this.getMenuUsuario().MenuProfessor(this.getBd(), login);
+						this.getMenuUsuario().menuProfessor(this.getBd(), login);
 						this.setLoginFlag(false);
 						
 					}

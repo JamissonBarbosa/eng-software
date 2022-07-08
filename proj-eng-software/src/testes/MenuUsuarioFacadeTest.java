@@ -45,7 +45,7 @@ class MenuUsuarioFacadeTest {
 		bd.getDisciplinas().add(d1);
 		
 		try {
-			muf.MatricularAluno("1", bd);
+			muf.matricularAluno("1", bd);
 			assertEquals(a1.getDisciplinas().contains(d1),true);
 		} catch (AlunoMatriculadoException e) {
 			fail("Aluno indevidamente nao matriculado");
@@ -59,8 +59,8 @@ class MenuUsuarioFacadeTest {
 		bd.getDisciplinas().add(d1);
 		
 		try {
-			muf.MatricularAluno("1", bd);
-			muf.MatricularAluno("1", bd);
+			muf.matricularAluno("1", bd);
+			muf.matricularAluno("1", bd);
 			fail("Aluno erroneamente matriculado");
 		} catch (AlunoMatriculadoException e) {
 			e.printStackTrace();
@@ -74,7 +74,7 @@ class MenuUsuarioFacadeTest {
 		bd.getDisciplinas().add(d1);
 		
 		try {
-			muf.MatricularAluno("a", bd);
+			muf.matricularAluno("a", bd);
 			assertEquals(a1.getDisciplinas().contains(d1),false);
 		} catch (AlunoMatriculadoException e) {
 			e.printStackTrace();
