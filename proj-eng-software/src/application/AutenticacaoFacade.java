@@ -1,12 +1,33 @@
 package application;
 
+import java.util.Calendar;
 import java.util.Scanner;
+
+import exceptions.EntradaInvalidaException;
+import exceptions.LoginExistenteException;
+import exceptions.SenhaInvalidaException;
+import exceptions.UsuarioInexistenteException;
 
 public class AutenticacaoFacade {
 	private Scanner scanner = new Scanner(System.in);
 	private BancoDeDados bd = new BancoDeDados();
-
+	private MenuUsuarioFacade menuUsuario = new MenuUsuarioFacade();
+	private boolean cadastroFlag;
+	private boolean loginFlag;
+		
 	
+	public boolean getCadastroFlag() {
+		return cadastroFlag;
+	}
+	public void setCadastroFlag(boolean cadastroFlag) {
+		this.cadastroFlag = cadastroFlag;
+	}
+	public boolean getLoginFlag() {
+		return loginFlag;
+	}
+	public void setLoginFlag(boolean loginFlag) {
+		this.loginFlag = loginFlag;
+	}
 	public Scanner getScanner() {
 		return scanner;
 	}
@@ -17,97 +38,139 @@ public class AutenticacaoFacade {
 		this.bd = bd;
 	}
 	
+	public MenuUsuarioFacade getMenuUsuario() {
+		return menuUsuario;
+	}
+	public void setMenuUsuario(MenuUsuarioFacade menuUsuario) {
+		this.menuUsuario = menuUsuario;
+	}
+
 	public AutenticacaoFacade(){
 	}
 	public void cadastro() {
 		
-		System.out.println("Voce e um:\n1- Aluno\n2- Professor");
-		String tipoUsuario = this.getScanner().nextLine();
+		this.setCadastroFlag(true);
 		
-		boolean cadastroFlag = true;
-		
-		while(cadastroFlag == true) {
-			System.out.println("Nome: ");
-			String nome = this.getScanner().nextLine();
-			System.out.println("login: ");
-			String login = this.getScanner().nextLine();
-			System.out.println("senha: ");
-			String senha = this.getScanner().nextLine();
+		while(this.getCadastroFlag() == true) {
+			System.out.println("Voce e um:\n0- Sair\n1- Aluno\n2- Professor\n===============================================================");
+			String tipoUsuario = this.getScanner().nextLine();
 			
-			if (bd.consultarLogin(login) == true){
-				System.out.println("Login ja existente, tente novamente");
-			}else {
-				switch(tipoUsuario) {
-				case "1":
-					
-					Aluno aluno = new Aluno(nome,login,senha);
-					getBd().cadastrarAluno(aluno);
-					aluno.gerarMatricula("Aluno",getBd().recuperarMatriculasAlunos());
-					System.out.println("Cadastro concluido com sucesso!\nSua matricula: ");
-					System.out.println(aluno.getMatricula());
-					cadastroFlag = false;
-					break;
-				case "2":
-					Professor professor = new Professor(nome,login,senha);
-
-					getBd().cadastrarProfessor(professor);
-					professor.gerarMatricula("Professor",getBd().recuperarMatriculasProfessores());
-					System.out.println("Cadastro concluido com sucesso!\nSua matricula: ");
-					System.out.println(professor.getMatricula());
-					cadastroFlag = false;
-					break;
-				case "0":
-					cadastroFlag = false;
-					break;
-				default:
-					System.out.println("erro");
-					break;
-				}
-			}			
+			String nome = "";
+			String login = "";
+			String senha = "";
+			
+			if(tipoUsuario.equals("1") || tipoUsuario.equals("2")) {
+				System.out.println("Nome: ");
+				nome = this.getScanner().nextLine();
+				System.out.println("login: ");
+				login = this.getScanner().nextLine();
+				System.out.println("senha: ");
+				senha = this.getScanner().nextLine();
+			}
+			
+			try {
+				this.CadastroValidacao(tipoUsuario, nome, login, senha);
+			} catch (EntradaInvalidaException eie) {
+				System.out.println(eie.getMessage()+"\n===============================================================");
+			}		
 		}		
+	}
+	
+	public void CadastroValidacao(String tipoUsuario,String nome,String login,String senha) throws EntradaInvalidaException{
+		switch(tipoUsuario) {
+		case "1":
+			
+			Aluno aluno = new Aluno(nome,login,senha);
+			try {
+				this.getBd().cadastrarAluno(aluno);
+				aluno.gerarMatriculaTemplateMethod(this.getBd().recuperarMatriculasAlunos().size(),Calendar.getInstance().get(Calendar.YEAR));
+				this.setCadastroFlag(false);
+			} catch (LoginExistenteException lee) {
+				System.out.println(lee.getMessage()+"\n===============================================================");
+			}
+			
+			break;
+		case "2":
+			Professor professor = new Professor(nome,login,senha);
+			try {
+				this.getBd().cadastrarProfessor(professor);
+				professor.gerarMatriculaTemplateMethod(this.getBd().recuperarMatriculasProfessores().size(),Calendar.getInstance().get(Calendar.YEAR));
+				this.setCadastroFlag(false);
+			} catch (LoginExistenteException lee) {
+				System.out.println(lee.getMessage()+"\n===============================================================");
+			}
+			break;
+		case "0":
+			this.setCadastroFlag(false);
+			break;
+		default:
+			throw new EntradaInvalidaException();
+		}
 	}
 	
 	public void login() {
 		
-		boolean loginFlag = true;
+		this.setLoginFlag(true);
 		
-		while(loginFlag == true) {
-			System.out.println("Voce e aluno ou professor?\n1- Aluno\n2-Professor");
+		while(this.getLoginFlag() == true) {
+			System.out.println("Voce e aluno ou professor?\n0- Sair\n1- Aluno\n2-Professor\n===============================================================");
 			String tipoUsuario = this.getScanner().nextLine();
 			
-			System.out.println("login:");
-			String login = this.getScanner().nextLine();
-			System.out.println("senha:");
-			String senha = this.getScanner().nextLine();
+			String login = "";
+			String senha = "";
 			
-			
-			if (bd.consultarLogin(login) == false) {
-				System.out.println("Usuario não encontrado");
+			if(tipoUsuario.equals("1") || tipoUsuario.equals("2")) {
+				System.out.println("login: ");
+				login = this.getScanner().nextLine();
+				System.out.println("senha: ");
+				senha = this.getScanner().nextLine();
 			}
-			else {
-				switch(tipoUsuario) {
-				case "1":
-					if(bd.validarSenhaAluno(login, senha) == false) {
-						System.out.println("Senha invalida para Aluno");
-					}else {
-						System.out.println("Login realizado com sucesso como Aluno");
-						loginFlag = false;
+			
+			try {
+				this.loginValidacao(tipoUsuario, login, senha);
+			} catch (UsuarioInexistenteException uie) {
+				System.out.println(uie.getMessage() + "\n===============================================================");		
+
+			} catch (EntradaInvalidaException eie) {
+				System.out.println(eie.getMessage() + "\n===============================================================");		
+			}
+		}
+	}
+	public void loginValidacao(String tipoUsuario, String login, String senha) throws UsuarioInexistenteException,EntradaInvalidaException{
+		
+		
+		if (this.getBd().consultarLogin(login) == false && !tipoUsuario.equals("0")) {
+			throw new UsuarioInexistenteException();
+		}
+		else {
+			switch(tipoUsuario) {
+			case "1":
+				try {
+					if(this.getBd().validarSenhaAluno(login, senha) == true) {
+						System.out.println("Login realizado com sucesso como Aluno\n===============================================================");
+						this.getMenuUsuario().MenuAluno(this.getBd(), login);
+						this.setLoginFlag(false);
 					}
-					break;
-				case "2":
-					if(bd.validarSenhaProfessor(login, senha) == false) {
-						System.out.println("Senha invalida para Professor");
-					}else {
-						System.out.println("Login realizado com sucesso como Professor");
-						loginFlag = false;
-					}
-					break;
-				case "0":
-					loginFlag = false;
-					break;
-				default:
-					System.out.println("erro");
+				} catch (SenhaInvalidaException sie) {
+					System.out.println(sie.getMessage() + "\n===============================================================");		
 				}
+				break;
+			case "2":
+				try {
+					if(this.getBd().validarSenhaProfessor(login, senha) == true) {
+						this.getMenuUsuario().MenuProfessor(this.getBd(), login);
+						this.setLoginFlag(false);
+						
+					}
+				} catch (SenhaInvalidaException sie) {
+					System.out.println(sie.getMessage() + "\n===============================================================");		
+				}
+				break;
+			case "0":
+				this.setLoginFlag(false);
+				break;
+			default:
+				throw new EntradaInvalidaException();
 			}
 		}
 	}

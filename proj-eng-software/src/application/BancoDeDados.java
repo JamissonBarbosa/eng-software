@@ -1,25 +1,35 @@
 package application;
 import java.util.ArrayList;
 
+import exceptions.LoginExistenteException;
+import exceptions.SenhaInvalidaException;
+
 public class BancoDeDados {
 	private ArrayList<Aluno> alunos = new ArrayList<Aluno>();
 	private ArrayList<Professor> professores = new ArrayList<Professor>();
+	private ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
 	
 	public ArrayList<Aluno> getAlunos() {
 		return alunos;
 	}
-	public void setAlunos(ArrayList<Aluno> alunos) {
-		this.alunos = alunos;
-	}
+
 	public ArrayList<Professor> getProfessores() {
 		return professores;
 	}
-	public void setProfessores(ArrayList<Professor> professores) {
-		this.professores = professores;
-	}
 
-	public void cadastrarAluno(Aluno novoAluno) {
-		getAlunos().add(novoAluno);
+	public ArrayList<Disciplina> getDisciplinas() {
+		return disciplinas;
+	}
+	
+	public void cadastrarAluno(Aluno novoAluno) throws LoginExistenteException{
+		if(this.consultarLogin(novoAluno.getLogin()) == false) {
+			getAlunos().add(novoAluno);
+		}
+		else {
+			throw new LoginExistenteException();
+		}
+		
+		
 	}
 	
 	public boolean consultarAluno(Aluno aluno) {
@@ -40,8 +50,13 @@ public class BancoDeDados {
 		return matriculasAlunos;
 	}
 	
-	public void cadastrarProfessor(Professor novoProfessor) {
-		getProfessores().add(novoProfessor);
+	public void cadastrarProfessor(Professor novoProfessor) throws LoginExistenteException{
+		if(this.consultarLogin(novoProfessor.getLogin())==false) {
+			getProfessores().add(novoProfessor);
+		}
+		else {
+			throw new LoginExistenteException();
+		}
 	}
 	
 	public boolean consultarProfessor(Professor professor) {
@@ -72,24 +87,27 @@ public class BancoDeDados {
 		}
 		return false;
 	}
-	public boolean validarSenhaProfessor(String login,String senha) {
+	public boolean validarSenhaProfessor(String login,String senha) throws SenhaInvalidaException{
 		for (Professor professor : getProfessores()) {
 			if(professor.getLogin().equals(login)) {
-				if(professor.getSenha().equals(senha)) {
-					return true;
+				if(!professor.getSenha().equals(senha)) {
+					throw new SenhaInvalidaException();
 				}
 			}
 		}
-		return false;
+		return true;
 	}
-	public boolean validarSenhaAluno(String login, String senha) {
-		for (Professor professor : getProfessores()) {
-			if(professor.getLogin().equals(login)) {
-				if(professor.getSenha().equals(senha)) {
-					return true;
+	public boolean validarSenhaAluno(String login, String senha) throws SenhaInvalidaException{
+		for (Aluno aluno : getAlunos()) {
+			if(aluno.getLogin().equals(login)) {
+				if(!aluno.getSenha().equals(senha)) {
+					throw new SenhaInvalidaException();
 				}
 			}			
 		}
-		return false;
+		return true;
+	}
+	public void cadastrarDisciplina(Disciplina disciplina) {
+		this.getDisciplinas().add(disciplina);
 	}
 }
