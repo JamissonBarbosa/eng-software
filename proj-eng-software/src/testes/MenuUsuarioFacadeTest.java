@@ -14,7 +14,6 @@ import application.Disciplina;
 import application.MenuUsuarioFacade;
 import application.Professor;
 import exceptions.AlunoMatriculadoException;
-import exceptions.EntradaInvalidaException;
 
 class MenuUsuarioFacadeTest {
 	

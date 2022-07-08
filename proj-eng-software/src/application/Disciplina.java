@@ -7,8 +7,6 @@ public class Disciplina {
 	private String professor;
 	private String ementa;
 	private ArrayList<Aluno> alunos = new ArrayList<Aluno>();
-	private ArrayList<Aula> aulas = new ArrayList<Aula>();
-	private ArrayList<Atividade> atividades = new ArrayList<Atividade>();
 	
 	public Disciplina(String nome, String professor, String ementa){
 		this.setNome(nome);
@@ -40,16 +38,5 @@ public class Disciplina {
 	public void setAlunos(ArrayList<Aluno> alunos) {
 		this.alunos = alunos;
 	}
-	public ArrayList<Atividade> getAtividades() {
-		return atividades;
-	}
-	public void setAtividades(ArrayList<Atividade> atividades) {
-		this.atividades = atividades;
-	}
-	public ArrayList<Aula> getAulas() {
-		return aulas;
-	}
-	public void setAulas(ArrayList<Aula> aulas) {
-		this.aulas = aulas;
-	}
 }
+
