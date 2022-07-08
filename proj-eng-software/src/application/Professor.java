@@ -35,7 +35,7 @@ public class Professor extends Usuario{
 	}
 
 	public void adicionarDisciplina(Disciplina disciplina, BancoDeDados bd) throws LimiteDisciplinaException{
-		if(this.getDisciplinas().size() < 4) {
+		if(this.getDisciplinas().size() < 5) {
 			this.getDisciplinas().add(disciplina);
 			bd.getDisciplinas().add(disciplina);
 			System.out.println("Disciplina criada com sucesso\n===============================================================");

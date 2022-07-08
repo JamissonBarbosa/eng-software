@@ -15,7 +15,9 @@ class ProfessorTest {
 	private Disciplina d2 = new Disciplina("d2","p2","ementa 2");
 	private Disciplina d3 = new Disciplina("d3","p3","ementa 3");
 	private Disciplina d4 = new Disciplina("d4","p4","ementa 4");
-	private Disciplina d5 = new Disciplina("d4","p4","ementa 4");
+	private Disciplina d5 = new Disciplina("d5","p5","ementa 5");
+	private Disciplina d6 = new Disciplina("d6","p6","ementa 6");
+	
 	private BancoDeDados bd = new BancoDeDados();
 	
 	@Test
@@ -76,7 +78,8 @@ class ProfessorTest {
 			p1.adicionarDisciplina(d2, bd);
 			p1.adicionarDisciplina(d3, bd);
 			p1.adicionarDisciplina(d4, bd);
-			
+			p1.adicionarDisciplina(d5, bd);
+
 			p1.adicionarDisciplina(d1, bd);
 		} catch (LimiteDisciplinaException e) {
 			fail("Limite erroneamente identificado");
@@ -90,7 +93,8 @@ class ProfessorTest {
 			p1.adicionarDisciplina(d3, bd);
 			p1.adicionarDisciplina(d4, bd);
 			p1.adicionarDisciplina(d5, bd);
-	
+			p1.adicionarDisciplina(d6, bd);
+
 			p1.adicionarDisciplina(d1, bd);
 			
 			fail("Disciplina adicionada além do limite");
