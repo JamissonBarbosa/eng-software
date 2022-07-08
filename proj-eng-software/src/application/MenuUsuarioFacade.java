@@ -59,13 +59,13 @@ public class MenuUsuarioFacade {
 		Scanner scCriarDisciplina = new Scanner(System.in);
 		this.setProfessor(professorLogin, bd);
 		
-		System.out.println("Login realizado com sucesso como Professor");
+		System.out.println("Login realizado com sucesso como Professor\n===============================================================");
 
 		
 		boolean funcionalidadeFlag = true;
 		
 		while (funcionalidadeFlag == true) {
-			System.out.println("0- Sair\n1- Listar disciplinas\n2- Criar nova disciplina\n");
+			System.out.println("0- Sair\n1- Listar disciplinas\n2- Criar nova disciplina\n===============================================================");
 			String funcionalidade = this.getScFuncionalidade().nextLine();
 			
 			switch(funcionalidade) {
@@ -96,11 +96,11 @@ public class MenuUsuarioFacade {
 				try {
 					this.getProfessor().adicionarDisciplina(disciplina, bd);
 				} catch (LimiteDisciplinaException lde) {
-					System.out.println(lde.getMessage()); 
+					System.out.println(lde.getMessage()+"\n==============================================================="); 
 				}
 			}
 		} catch (DisciplinaExistenteException dee) {
-			System.out.println(dee.getMessage()); 
+			System.out.println(dee.getMessage()+"\n==============================================================="); 
 		}
 	}
 	
@@ -110,7 +110,7 @@ public class MenuUsuarioFacade {
 		boolean funcionalidadeFlag = true;
 		
 		while (funcionalidadeFlag == true) {
-			System.out.println("0- Sair\n1- Disciplinas matriculadas\n2- Matricular-se em disciplina");
+			System.out.println("0- Sair\n1- Disciplinas matriculadas\n2- Matricular-se em disciplina\n===============================================================");
 			String funcionalidade = this.getScFuncionalidade().nextLine();
 			
 			switch(funcionalidade) {
@@ -124,7 +124,7 @@ public class MenuUsuarioFacade {
 				this.setMatriculaFlag(true);
 				
 				while(this.getMatriculaFlag() == true) {
-					System.out.println("Selecione as disciplinas que deseja matricular-se:\n0- Sair");
+					System.out.println("Selecione as disciplinas que deseja matricular-se:\n0- Sair\n===============================================================");
 					for (Disciplina disciplina : bd.getDisciplinas()) {
 						int indexDisciplina = bd.getDisciplinas().indexOf(disciplina)+1;
 						System.out.println(indexDisciplina +"- "+ disciplina.getNome() + ", professor: "+disciplina.getProfessor()+", ementa: "+disciplina.getEmenta());
@@ -133,7 +133,7 @@ public class MenuUsuarioFacade {
 					try {
 						this.MatricularAluno(matricula, bd);
 					} catch (AlunoMatriculadoException ame) {
-						System.out.println(ame.getMessage());
+						System.out.println(ame.getMessage()+"\n===============================================================");
 					}
 				}
 				break;
@@ -146,7 +146,7 @@ public class MenuUsuarioFacade {
 		try{	
 		int matriculaInt = Integer.parseInt(matricula);
 		if(matriculaInt == 0) {
-			this.setMatriculaFlag(true);
+			this.setMatriculaFlag(false);
 		}else {
 			for(Disciplina disciplina : bd.getDisciplinas()) {
 				if (bd.getDisciplinas().indexOf(disciplina)==matriculaInt-1) {
@@ -154,14 +154,14 @@ public class MenuUsuarioFacade {
 						throw new AlunoMatriculadoException();
 					}else {
 						aluno.getDisciplinas().add(disciplina);
-						System.out.println("A matricula na disciplina "+ disciplina.getNome() +" foi realizada com sucesso.");
+						System.out.println("A matricula na disciplina "+ disciplina.getNome() +" foi realizada com sucesso.\n===============================================================");
 					}
 				break;
 				}
 			}
 		}
 		} catch(NumberFormatException nfe) {
-			System.out.println(nfe.getMessage());
+			System.out.println(nfe.getMessage()+"\n===============================================================");
 		}		
 	}
 }

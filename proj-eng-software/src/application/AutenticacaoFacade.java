@@ -52,7 +52,7 @@ public class AutenticacaoFacade {
 		this.setCadastroFlag(true);
 		
 		while(this.getCadastroFlag() == true) {
-			System.out.println("Voce e um:\n0- Sair\n1- Aluno\n2- Professor");
+			System.out.println("Voce e um:\n0- Sair\n1- Aluno\n2- Professor\n===============================================================");
 			String tipoUsuario = this.getScanner().nextLine();
 			
 			String nome = "";
@@ -113,7 +113,7 @@ public class AutenticacaoFacade {
 		this.setLoginFlag(true);
 		
 		while(this.getLoginFlag() == true) {
-			System.out.println("Voce e aluno ou professor?\n0- Sair\n1- Aluno\n2-Professor");
+			System.out.println("Voce e aluno ou professor?\n0- Sair\n1- Aluno\n2-Professor\n===============================================================");
 			String tipoUsuario = this.getScanner().nextLine();
 			
 			String login = "";
@@ -147,7 +147,7 @@ public class AutenticacaoFacade {
 			case "1":
 				try {
 					if(this.getBd().validarSenhaAluno(login, senha) == true) {
-						System.out.println("Login realizado com sucesso como Aluno");
+						System.out.println("Login realizado com sucesso como Aluno\n===============================================================");
 						this.getMenuUsuario().MenuAluno(this.getBd(), login);
 						this.setLoginFlag(false);
 					}

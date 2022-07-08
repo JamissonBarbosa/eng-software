@@ -30,7 +30,7 @@ public class Professor extends Usuario{
 		for(Disciplina disciplina : this.getDisciplinas()) {
 			lista += this.getDisciplinas().indexOf(disciplina)+1 +"- "+ disciplina.getNome()+"\n";
 		}
-		System.out.println("Suas disciplinas:\n"+lista);
+		System.out.println("Suas disciplinas:\n"+lista+"\n===============================================================");
 		return lista;
 	}
 
@@ -38,7 +38,7 @@ public class Professor extends Usuario{
 		if(this.getDisciplinas().size() < 4) {
 			this.getDisciplinas().add(disciplina);
 			bd.getDisciplinas().add(disciplina);
-			System.out.println("Disciplina criada com sucesso");
+			System.out.println("Disciplina criada com sucesso\n===============================================================");
 		}else {
 			throw new LimiteDisciplinaException();
 		}

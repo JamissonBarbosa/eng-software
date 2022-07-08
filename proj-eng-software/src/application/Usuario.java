@@ -73,7 +73,7 @@ public abstract class Usuario{
 	}
 	
 	public void matriculaToString() {
-		System.out.println("Matricula gerada com sucesso!\n Sua matricula: "+ this.getMatricula());
+		System.out.println("Matricula gerada com sucesso!\n Sua matricula: "+ this.getMatricula()+"\n===============================================================");
 	}
 	
 	public abstract String listarDisciplinas();

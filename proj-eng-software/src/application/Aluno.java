@@ -19,7 +19,7 @@ public class Aluno extends Usuario{;
 			int indexDisciplina = this.getDisciplinas().indexOf(disciplina)+1;
 			lista += indexDisciplina +"- "+ disciplina.getNome()+"\n";
 		}
-		System.out.println("Suas disciplinas:\n"+lista);
+		System.out.println("Suas disciplinas:\n"+lista+"\n===============================================================");
 		return lista;
 	}
 
