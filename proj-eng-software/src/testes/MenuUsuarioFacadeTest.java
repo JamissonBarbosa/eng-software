@@ -2,10 +2,6 @@ package testes;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import application.Aluno;
@@ -23,23 +19,6 @@ class MenuUsuarioFacadeTest {
 	Aluno a1 = new Aluno("a1","a1","a1");
 	Disciplina d1 = new Disciplina("d1","d1","d1");
 	Disciplina d2 = new Disciplina("d2","d2","d2");
-
-
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterAll
-	static void tearDownAfterClass() throws Exception {
-	}
-
-	@BeforeEach
-	void setUp() throws Exception {
-	}
-
-	@AfterEach
-	void tearDown() throws Exception {
-	}
 
 	@Test
 	void testCriarDisciplina1() {
